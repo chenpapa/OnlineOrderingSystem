@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+    <context:component-scan base-package="la.chopper.web"/>
+
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <!-- 将webSocketHandler映射到"/communication" -->
+    <websocket:handlers>
+        <websocket:mapping path="/communication" handler="webSocketHandler"/>
+    </websocket:handlers>
+
+    <!-- 声明WebSocketUtils Bean -->
+    <bean id="webSocketHandler" class="la.chopper.utils.WebSocketUtils"/>
+
+    <!-- 注册自定义的类型转换器 -->
+    <bean name="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="la.chopper.converter.DateConverter"/>
+                <bean class="la.chopper.converter.BooleanConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8"
+          p:maxUploadSize="5242880"
+          p:uploadTempDir="file:/d:/temp"/>
+
+    <!-- 使用InternalResourceViewResolver作为视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp"/>
+
+    <!-- 显示定义RequestMappingHandlerAdapter，覆盖默认的RequestMappingHandlerAdapter -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+          p:messageConverters-ref="messageConverters"/>
+    <util:list id="messageConverters">
+        <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+    </util:list>
+
+    <!--使用Json解析器 -->
+    <!-- 默认情况下，MappingJackson2JsonView会将模型中的所有数据全部输出为JSON，通过modelKeys指定模型中的哪些属性需要输出 -->
+    <bean id="goodsListJson" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+    <!-- location属性是Resource类型 -->
+    <mvc:resources location="/img/" mapping="/img/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+
+</beans>

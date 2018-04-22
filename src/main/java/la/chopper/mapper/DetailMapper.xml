@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="la.chopper.mapper.DetailMapper">
+    <resultMap id="BaseResultMap" type="la.chopper.domain.Detail">
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL"/>
+        <result column="goods_discount" property="goodsDiscount" jdbcType="DECIMAL"/>
+        <result column="goods_count" property="goodsCount" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_id,goods_price,goods_discount,goods_count
+    </sql>
+    <insert id="insert" parameterType="la.chopper.domain.Detail">
+        INSERT INTO detail (order_id, goods_price, goods_discount,
+                            goods_count)
+        VALUES (#{orderId,jdbcType=BIGINT}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsDiscount,jdbcType=DECIMAL},
+                #{goodsCount,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="la.chopper.domain.Detail">
+        insert into detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="goodsDiscount != null">
+                goods_discount,
+            </if>
+            <if test="goodsCount != null">
+                goods_count,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsDiscount != null">
+                #{goodsDiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsCount != null">
+                #{goodsCount,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="selectDetailByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM detail
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteDetailByOrderId" parameterType="java.lang.Long">
+        DELETE FROM detail
+        WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </delete>
+</mapper>

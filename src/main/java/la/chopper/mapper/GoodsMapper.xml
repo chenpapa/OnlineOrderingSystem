@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="la.chopper.mapper.GoodsMapper">
+    <resultMap id="BaseResultMap" type="la.chopper.domain.Goods">
+        <id column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="goods_catalog_id" property="goodsCatalogId" jdbcType="BIGINT"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_pic" property="goodsPic" jdbcType="VARCHAR"/>
+        <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL"/>
+        <result column="goods_discount" property="goodsDiscount" jdbcType="DECIMAL"/>
+        <result column="goods_status" property="goodsStatus" jdbcType="BIT"/>
+        <result column="goods_is_deleted" property="goodsIsDeleted" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        goods_id, goods_catalog_id, goods_name, goods_pic, goods_price, goods_discount, goods_status,
+        goods_is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from goods
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </select>
+    <select id="selectGoodsByCatalogId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM goods
+        where goods_catalog_id = #{goodsCatalogId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM goods
+        WHERE goods_id = #{goodsId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="la.chopper.domain.Goods">
+        INSERT INTO goods (goods_id, goods_catalog_id, goods_name,
+                           goods_pic, goods_price, goods_discount,
+                           goods_status, goods_is_deleted)
+        VALUES (#{goodsId,jdbcType=BIGINT}, #{goodsCatalogId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR},
+                #{goodsPic,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsDiscount,jdbcType=DECIMAL},
+                #{goodsStatus,jdbcType=BIT}, #{goodsIsDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="la.chopper.domain.Goods">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsCatalogId != null">
+                goods_catalog_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsPic != null">
+                goods_pic,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="goodsDiscount != null">
+                goods_discount,
+            </if>
+            <if test="goodsStatus != null">
+                goods_status,
+            </if>
+            <if test="goodsIsDeleted != null">
+                goods_is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCatalogId != null">
+                #{goodsCatalogId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPic != null">
+                #{goodsPic,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsDiscount != null">
+                #{goodsDiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsStatus != null">
+                #{goodsStatus,jdbcType=BIT},
+            </if>
+            <if test="goodsIsDeleted != null">
+                #{goodsIsDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="la.chopper.domain.Goods">
+        update goods
+        <set>
+            <if test="goodsCatalogId != null">
+                goods_catalog_id = #{goodsCatalogId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPic != null">
+                goods_pic = #{goodsPic,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsDiscount != null">
+                goods_discount = #{goodsDiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsStatus != null">
+                goods_status = #{goodsStatus,jdbcType=BIT},
+            </if>
+            <if test="goodsIsDeleted != null">
+                goods_is_deleted = #{goodsIsDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="la.chopper.domain.Goods">
+        UPDATE goods
+        SET goods_catalog_id = #{goodsCatalogId,jdbcType=BIGINT},
+            goods_name       = #{goodsName,jdbcType=VARCHAR},
+            goods_pic        = #{goodsPic,jdbcType=VARCHAR},
+            goods_price      = #{goodsPrice,jdbcType=DECIMAL},
+            goods_discount   = #{goodsDiscount,jdbcType=DECIMAL},
+            goods_status     = #{goodsStatus,jdbcType=BIT},
+            goods_is_deleted = #{goodsIsDeleted,jdbcType=BIT}
+        WHERE goods_id = #{goodsId,jdbcType=BIGINT}
+    </update>
+</mapper>

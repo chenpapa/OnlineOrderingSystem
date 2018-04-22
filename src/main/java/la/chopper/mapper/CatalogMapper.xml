@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="la.chopper.mapper.CatalogMapper">
+    <resultMap id="BaseResultMap" type="la.chopper.domain.Catalog">
+        <id column="catalog_id" property="catalogId" jdbcType="BIGINT"/>
+        <result column="catalog_restaurant" property="catalogRestaurant" jdbcType="BIGINT"/>
+        <result column="catalog_name" property="catalogName" jdbcType="VARCHAR"/>
+        <result column="catalog_is_deleted" property="catalogIsDeleted" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        catalog_id, catalog_restaurant, catalog_name, catalog_is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from catalog
+        where catalog_id = #{catalogId,jdbcType=BIGINT}
+    </select>
+    <select id="selectCatalogByRestaurantId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+        catalog
+        WHERE catalog_restaurant = #{catalogRestaurant,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM catalog
+        WHERE catalog_id = #{catalogId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="la.chopper.domain.Catalog">
+        INSERT INTO catalog (catalog_id, catalog_restaurant, catalog_name,
+                             catalog_is_deleted)
+        VALUES (#{catalogId,jdbcType=BIGINT}, #{catalogRestaurant,jdbcType=BIGINT}, #{catalogName,jdbcType=VARCHAR},
+                #{catalogIsDeleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="la.chopper.domain.Catalog">
+        insert into catalog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="catalogId != null">
+                catalog_id,
+            </if>
+            <if test="catalogRestaurant != null">
+                catalog_restaurant,
+            </if>
+            <if test="catalogName != null">
+                catalog_name,
+            </if>
+            <if test="catalogIsDeleted != null">
+                catalog_is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="catalogId != null">
+                #{catalogId,jdbcType=BIGINT},
+            </if>
+            <if test="catalogRestaurant != null">
+                #{catalogRestaurant,jdbcType=BIGINT},
+            </if>
+            <if test="catalogName != null">
+                #{catalogName,jdbcType=VARCHAR},
+            </if>
+            <if test="catalogIsDeleted != null">
+                #{catalogIsDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="la.chopper.domain.Catalog">
+        update catalog
+        <set>
+            <if test="catalogRestaurant != null">
+                catalog_restaurant = #{catalogRestaurant,jdbcType=BIGINT},
+            </if>
+            <if test="catalogName != null">
+                catalog_name = #{catalogName,jdbcType=VARCHAR},
+            </if>
+            <if test="catalogIsDeleted != null">
+                catalog_is_deleted = #{catalogIsDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where catalog_id = #{catalogId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="la.chopper.domain.Catalog">
+        UPDATE catalog
+        SET catalog_restaurant = #{catalogRestaurant,jdbcType=BIGINT},
+            catalog_name       = #{catalogName,jdbcType=VARCHAR},
+            catalog_is_deleted = #{catalogIsDeleted,jdbcType=BIT}
+        WHERE catalog_id = #{catalogId,jdbcType=BIGINT}
+    </update>
+</mapper>
