@@ -115,7 +115,6 @@ public class UserController extends BaseController {
         } else {
             setSessionUser(request, user);
             result.setResult("true");
-            System.out.println("1111");
             return result;
         }
     }

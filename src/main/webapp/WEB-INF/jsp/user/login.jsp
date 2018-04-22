@@ -307,7 +307,7 @@
                     dataType: "json",
                     timeout: 1000, //超时时间设置，单位毫秒
                     url: "http://localhost:8080/user/loginValidate",
-                    async: false,
+                    async: true,
                     data: {
                         userPhone: $("#userPhone").val(),
                         userPassword: $("#userPassword").val()
