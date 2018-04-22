@@ -44,7 +44,7 @@ public class QRCodeUtils {
     public static void main(String[] args) {
         File logoFile = new File("D://a7fedfa29fb24996b0f84441e7707c44.jpg");
         File QrCodeFile = new File("D://05.png");
-        String url = "http://localhost:8080/restaurant/QRCode/1000/1";
+        String url = "http://192.168.1.101:8080/restaurant/QRCode/1000/1";
         String note = "一号桌";
         drawLogoQRCode(logoFile, QrCodeFile, url, note);
     }

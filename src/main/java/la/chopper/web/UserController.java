@@ -115,43 +115,10 @@ public class UserController extends BaseController {
         } else {
             setSessionUser(request, user);
             result.setResult("true");
+            System.out.println("1111");
             return result;
         }
     }
-
-
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public ModelAndView login(HttpServletRequest request, User user) {
-//        User dbUser = userService.getUserByPhone(user.getUserPhone());
-//        if (dbUser == null || !dbUser.getUserPassword().equals(user.getUserPassword())) {
-//            return null;
-//        } else {
-//            ModelAndView mav = new ModelAndView();
-//            setSessionUser(request, user);
-//            if (getSessionRestaurant(request) == null) {
-//                mav.addObject("errMsg", "未选择餐厅，请扫描桌上的二维码");
-//                mav.setViewName("user/errMsg");
-//                return mav;
-//            } else if (getSessionTableNum(request) == null) {
-//                mav.addObject("errMsg", "未选择桌号，请扫描桌上的二维码");
-//                mav.setViewName("user/errMsg");
-//                return mav;
-//            } else {
-//                long restaurantId = getSessionRestaurant(request).getRestaurantId();
-//                List<Catalog> catalogList = restaurantService.getCatalogByRestaurantId(restaurantId);
-//                List<List> list = new ArrayList<>();
-//                for (Catalog catalog : catalogList) {
-//                    List<Goods> goodsList = goodsService.selectGoodsBycatalogId(catalog.getCatalogId());
-//                    list.add(goodsList);
-//                }
-//                mav.addObject("catalogList", catalogList);
-//                mav.addObject("goodsList", list);
-//                // mav.setViewName("restaurant/main");
-//                mav.setViewName("restaurant/main");
-//                return mav;
-//            }
-//        }
-//    }
 
     @RequestMapping("/test")
     @ResponseBody()

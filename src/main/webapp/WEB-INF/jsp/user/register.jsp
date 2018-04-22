@@ -32,6 +32,7 @@
 
         div {
             display: block;
+            cursor:pointer;
         }
 
         .p-login-header__img {

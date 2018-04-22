@@ -110,31 +110,36 @@
 
         .p-login-btn {
             font-size: 16px;
-            letter-spacing: .5px;
+            letter-spacing: 5px;
             color: #fff;
             background: -webkit-gradient(linear, left top, right top, from(#55bc5b), to(#55bc5b));
             background: -webkit-linear-gradient(left, #55bc5b, #55bc5b);
-            background: linear-gradient(to right, #55bc5b, #55bc5b)
+            background: linear-gradient(to right, #55bc5b, #55bc5b);
+            cursor: pointer;
         }
 
         .o-btn--h44 {
             line-height: 44px;
-            height: 44px
+            height: 44px;
+            cursor: pointer;
         }
 
         .o-btn--oval {
             -webkit-border-radius: 999px;
-            border-radius: 999px
+            border-radius: 999px;
+            cursor: pointer;
         }
 
         .o-btn--block {
             display: block;
-            width: 100%
+            width: 100%;
+            cursor: pointer;
         }
 
         .o-btn {
             display: inline-block;
-            text-align: center
+            text-align: center;
+            cursor: pointer;
         }
 
         button {
@@ -262,6 +267,7 @@
         </div>
     </div>
 </div>
+
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <script>
     $(function () {
@@ -272,8 +278,8 @@
                 warning("请输入正确的手机号");
             } else if ($("#userPassword").val().length < 6) {
                 warning("密码不得小于6位");
-            } else if ($("#userPassword").val().length > 16) {
-                warning("密码不得大于16位");
+            } else if ($("#userPassword").val().length > 12) {
+                warning("密码不得大于12位");
             } else {
                 login();
             }
@@ -296,14 +302,22 @@
 
             <!-- 发送登录信息 -->
             function login() {
-                $.post("http://localhost:8080/user/loginValidate", {
-                    userPhone: $("#userPhone").val(),
-                    userPassword: $("#userPassword").val()
-                }, function (data) {
-                    if (data.result == "true") {
-                        window.location.href = "http://localhost:8080/restaurant/frontend";
-                    } else {
-                        warning("手机或密码错误");
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    timeout: 1000, //超时时间设置，单位毫秒
+                    url: "http://localhost:8080/user/loginValidate",
+                    async: false,
+                    data: {
+                        userPhone: $("#userPhone").val(),
+                        userPassword: $("#userPassword").val()
+                    },
+                    success: function (data) {
+                        if (data.result == "true") {
+                            location = "http://localhost:8080/restaurant/frontend";
+                        } else {
+                            warning("手机或密码错误");
+                        }
                     }
                 });
             }

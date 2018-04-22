@@ -112,8 +112,10 @@ public class RestaurantController extends BaseController {
             mav.addObject("errMsg", "餐桌不存在");
         } else if (getSessionUser(request) == null) {
             mav.addObject("errMsg", "用户未登录！");
-            mav.addObject("restaurantInfo", getSessionRestaurant(request));
-            setSessionRestaurant(request, restaurantService.getRestaurantById(restaurantId));
+            Restaurant dbRestaurant = restaurantService.getRestaurantById(restaurantId);
+            dbRestaurant.setRestaurantPassword("");
+            mav.addObject("restaurantInfo", dbRestaurant);
+            setSessionRestaurant(request, dbRestaurant);
             setSessionTableNum(request, tableNum);
         } else {
             Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
