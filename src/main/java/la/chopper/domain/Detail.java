@@ -3,6 +3,8 @@ package la.chopper.domain;
 public class Detail extends BaseDomain {
     private Long orderId;
 
+    private Long goodsId;
+
     private Long goodsPrice;
 
     private Long goodsDiscount;
@@ -15,6 +17,14 @@ public class Detail extends BaseDomain {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public Long getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
     public Long getGoodsPrice() {
