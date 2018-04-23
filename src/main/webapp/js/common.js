@@ -93,10 +93,10 @@ $(function () {
         }
 
         $.ajax({
-            // headers: {
-            //     'Accept': 'application/json',
-            //     'Content-Type': 'application/json'
-            // },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             type: "POST",
             dataType: "json",
             url: "http://localhost:8080/order/createOrder",
