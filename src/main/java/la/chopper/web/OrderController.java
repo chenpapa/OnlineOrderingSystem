@@ -60,7 +60,6 @@ public class OrderController extends BaseController {
         if (orderMap.get(request) == null) {
             if (details != null) {
                 TextMessage message = new TextMessage(JSON.toJSONString(details));
-                System.out.println(JSON.toJSONString(details));
                 try {
                     orderMap.put(request, getSessionTableNum(request));
                     request.getSession().setAttribute("detailList", details);
