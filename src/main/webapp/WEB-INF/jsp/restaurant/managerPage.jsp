@@ -286,7 +286,9 @@
                         已&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：<br>
                         订单金额：<br>
                     </div>
-                    <div class="tile-footer"><a class="btn btn-primary" href="#">结账</a></div>
+                    <div class="tile-foote">
+                        <a class="btn btn-primary"data-id="${i}">查看</a>
+                    </div>
                 </div>
             </div>
         </c:forEach>
@@ -312,8 +314,7 @@
     }
 
     sock.onmessage = function (ev) {
-        console.log('接受消息： ' + ev.data);
-        sock.send("收到消息");
+        JSON.
     }
     var data = {
         labels: ["January", "February", "March", "April", "May"],
@@ -378,6 +379,13 @@
         ga('create', 'UA-72504830-1', 'auto');
         ga('send', 'pageview');
     }
+    $(function () {
+        $("a.btn.btn-primary").click(function () {
+            var tableNum = $(this).attr("data-id");
+            alert(tableNum);
+        });
+    });
+
 </script>
 </body>
 </html>

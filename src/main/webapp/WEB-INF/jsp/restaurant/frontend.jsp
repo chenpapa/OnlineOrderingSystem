@@ -78,7 +78,7 @@
                 <c:forEach items="${list}" var="goodsListForEach" varStatus="index">
                     <c:if test="${index.count == 1}">
                         <c:forEach items="${goodsListForEach}" var="goods">
-                            <li data-id="${goods.goodsId}">
+                            <li>
                                 <div class="menu-img">
                                     <img src="${pageContext.request.contextPath}/img/${goods.goodsPic}"
                                          width="55" height="55"/>
@@ -93,7 +93,7 @@
                                             <strong></strong>
                                         </button>
                                         <i>0</i>
-                                        <button class="add">
+                                        <button class="add" data-id="${goods.goodsId}">
                                             <strong></strong>
                                         </button>
                                         <i class="price">${goods.goodsPrice}</i>
@@ -114,7 +114,7 @@
                     <div class="right-con">
                         <ul>
                             <c:forEach items="${goodsListForEach}" var="goods">
-                                <li data-id="${goods.goodsId}">
+                                <li>
                                     <div class="menu-img">
                                         <img src="${pageContext.request.contextPath}/img/${goods.goodsPic}"
                                              width="55" height="55"/>
@@ -129,7 +129,7 @@
                                                 <strong></strong>
                                             </button>
                                             <i>0</i>
-                                            <button class="add">
+                                            <button class="add" data-id="${goods.goodsId}">
                                                 <strong></strong>
                                             </button>
                                             <i class="price">${goods.goodsPrice}</i>
@@ -157,7 +157,7 @@
 
 </div>
 
-<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/common.js"></script>
 
 </body>

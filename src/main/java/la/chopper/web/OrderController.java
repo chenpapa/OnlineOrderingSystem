@@ -9,10 +9,7 @@ import la.chopper.service.RestaurantService;
 import la.chopper.utils.WebSocketUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.TextMessage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +27,6 @@ public class OrderController extends BaseController {
     private WebSocketUtils webSocketHandler;
 
     private RestaurantService restaurantService;
-
-    private WebSocketUtils webSocketUtils;
 
     private Map<HttpServletRequest, Integer> orderMap = new HashMap<>();
 
@@ -58,30 +53,28 @@ public class OrderController extends BaseController {
         this.restaurantService = restaurantService;
     }
 
-    @Autowired
-    public void setWebSocketUtils(WebSocketUtils webSocketUtils) {
-        this.webSocketUtils = webSocketUtils;
-    }
-
-    @RequestMapping("/createOrder")
-    public String createOrder() {
-        return "order/createOrder";
-    }
-
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     @ResponseBody
-    public DataResult createOrder(HttpServletRequest request, List<Detail> details) {
+    public DataResult createOrder(HttpServletRequest request, @RequestBody List<Detail> details) {
         DataResult result = new DataResult();
-        if (orderMap.get(request) == getSessionTableNum(request)) {
+        if (orderMap.get(request) == null) {
             if (details != null) {
                 TextMessage message = new TextMessage(JSON.toJSONString(details));
                 try {
+                    orderMap.put(request, getSessionTableNum(request));
+                    request.getSession().setAttribute("detailList", details);
                     webSocketHandler.sendMessage(message);
                     result.setResult("true");
                 } catch (IOException e) {
                     e.printStackTrace();
                     result.setResult("false");
                 }
+            }
+            return result;
+        } else if (orderMap.get(request) == getSessionTableNum(request)) {
+            for (Detail detail : details) {
+                List<Detail> list = (List<Detail>) request.getSession().getAttribute("detailList");
+                list.add(detail);
             }
             return result;
         } else {
@@ -100,5 +93,17 @@ public class OrderController extends BaseController {
     @ResponseBody
     public List<Order> selectOrderByUserId(@PathVariable("userId") Long userId) {
         return orderService.selectOrderByUserId(userId);
+    }
+
+    @RequestMapping(value = "/checkOut", method = RequestMethod.POST)
+    public DataResult checkOut(HttpServletRequest request) {
+        DataResult result = new DataResult();
+        if (orderMap.remove(getSessionTableNum(request)) != null) {
+            result.setResult("true");
+            return result;
+        } else {
+            result.setResult("false");
+            return result;
+        }
     }
 }
