@@ -5,13 +5,14 @@
         <id column="order_id" property="orderId" jdbcType="BIGINT"/>
         <result column="order_restaurant" property="orderRestaurant" jdbcType="BIGINT"/>
         <result column="order_user" property="orderUser" jdbcType="BIGINT"/>
+        <result column="order_table" property="orderTable" jdbcType="INTEGER"/>
         <result column="order_staff" property="orderStaff" jdbcType="BIGINT"/>
         <result column="order_date" property="orderDate" jdbcType="DATE"/>
         <result column="order_status" property="orderStatus" jdbcType="BIT"/>
         <result column="order_total" property="orderTotal" jdbcType="DECIMAL"/>
     </resultMap>
     <sql id="Base_Column_List">
-        order_id, order_restaurant, order_user, order_staff, order_date, order_status, order_total
+        order_id, order_restaurant, order_user, order_table, order_staff, order_date, order_status, order_total
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -30,12 +31,12 @@
         WHERE order_id = #{orderId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="la.chopper.domain.Order">
-        INSERT INTO order (order_id, order_restaurant, order_user,
+        INSERT INTO order (order_id, order_restaurant, order_user, order_table,
                            order_staff, order_date, order_status,
                            order_total)
         VALUES (#{orderId,jdbcType=BIGINT}, #{orderRestaurant,jdbcType=BIGINT}, #{orderUser,jdbcType=BIGINT},
-                #{orderStaff,jdbcType=BIGINT}, #{orderDate,jdbcType=DATE}, #{orderStatus,jdbcType=BIT},
-                #{orderTotal,jdbcType=DECIMAL})
+                #{orderTable,jdbcType=INTEGER}, #{orderStaff,jdbcType=BIGINT}, #{orderDate,jdbcType=DATE},
+                #{orderStatus,jdbcType=BIT}, #{orderTotal,jdbcType=DECIMAL})
     </insert>
     <insert id="insertSelective" parameterType="la.chopper.domain.Order">
         insert into order
@@ -48,6 +49,9 @@
             </if>
             <if test="orderUser != null">
                 order_user,
+            </if>
+            <if test="orderTable != null">
+                order_table,
             </if>
             <if test="orderStaff != null">
                 order_staff,
@@ -72,6 +76,9 @@
             <if test="orderUser != null">
                 #{orderUser,jdbcType=BIGINT},
             </if>
+            <if test="orderTable != null">
+                #{orderTable,jdbcType=INTEGER},
+            </if>
             <if test="orderStaff != null">
                 #{orderStaff,jdbcType=BIGINT},
             </if>
@@ -95,6 +102,9 @@
             <if test="orderUser != null">
                 order_user = #{orderUser,jdbcType=BIGINT},
             </if>
+            <if test="orderTable != null">
+                order_table = #{orderTable,jdbcType=INTEGER},
+            </if>
             <if test="orderStaff != null">
                 order_staff = #{orderStaff,jdbcType=BIGINT},
             </if>
@@ -114,6 +124,7 @@
         UPDATE order
         SET order_restaurant = #{orderRestaurant,jdbcType=BIGINT},
             order_user       = #{orderUser,jdbcType=BIGINT},
+            order_table      = #{orderTable,jdbcType=INTEGER},
             order_staff      = #{orderStaff,jdbcType=BIGINT},
             order_date       = #{orderDate,jdbcType=DATE},
             order_status     = #{orderStatus,jdbcType=BIT},

@@ -122,7 +122,7 @@
 
             <!-- 发送注册信息 -->
             function restaurantPhoneIsExist() {
-                $.post("http://localhost:8080/restaurant/validate", {
+                $.post("http://localhost:8080/restaurant/registerValidate", {
                     restaurantPhone: $("#restaurantPhone").val()
                 }, function (data) {
                     if (data != null) {

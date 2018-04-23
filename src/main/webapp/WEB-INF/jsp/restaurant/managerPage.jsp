@@ -312,7 +312,7 @@
     }
 
     sock.onmessage = function (ev) {
-        console.log('接受消息： ', ev.data);
+        console.log('接受消息： ' + ev.data);
         sock.send("收到消息");
     }
     var data = {

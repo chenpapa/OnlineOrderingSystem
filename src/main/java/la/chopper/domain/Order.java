@@ -9,6 +9,8 @@ public class Order extends BaseDomain {
 
     private Long orderUser;
 
+    private Integer orderTable;
+
     private Long orderStaff;
 
     private Date orderDate;
@@ -39,6 +41,14 @@ public class Order extends BaseDomain {
 
     public void setOrderUser(Long orderUser) {
         this.orderUser = orderUser;
+    }
+
+    public Integer getOrderTable() {
+        return orderTable;
+    }
+
+    public void setOrderTable(Integer orderTable) {
+        this.orderTable = orderTable;
     }
 
     public Long getOrderStaff() {

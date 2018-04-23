@@ -43,7 +43,7 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
 
     }
 
-    public void sendMessage(TextMessage message) throws IOException{
+    public void sendMessage(TextMessage message) throws IOException {
         getSession().sendMessage(message);
     }
 

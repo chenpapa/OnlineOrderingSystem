@@ -8,7 +8,6 @@ import la.chopper.utils.CommonConstant;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Set;
 
 public class BaseController {
     protected static final String ERROR_MSG_KEY = "errorMsg";
@@ -99,13 +98,6 @@ public class BaseController {
         return (Integer) request.getSession().getAttribute(CommonConstant.TABLENUM_CONTEXT);
     }
 
-    protected void setSessionTableSet(HttpServletRequest request, Set<Integer> tableSet) {
-        request.getSession().setAttribute(CommonConstant.TABLESET_CONTEXT, tableSet);
-    }
-
-    protected Set<Integer> getSessionTableSet(HttpServletRequest request) {
-        return (Set<Integer>) request.getSession().getAttribute(CommonConstant.TABLESET_CONTEXT);
-    }
 
 
     /**

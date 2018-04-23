@@ -9,7 +9,6 @@
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta http-equiv="pragma" content="no-cache"/>
     <meta name="format-detection" content="telephone=no"/>
-
     <style>
 
         body, h1, h2, h3, h4, h5, h6, html, p, ul {
@@ -219,7 +218,6 @@
             color: #5184bc
         }
     </style>
-
     <title>用户登录</title>
 </head>
 <body>
@@ -305,9 +303,9 @@
                 $.ajax({
                     type: "POST",
                     dataType: "json",
-                    timeout: 1000, //超时时间设置，单位毫秒
+                    timeout: 1000,
                     url: "http://localhost:8080/user/loginValidate",
-                    async: true,
+                    async: false,
                     data: {
                         userPhone: $("#userPhone").val(),
                         userPassword: $("#userPassword").val()

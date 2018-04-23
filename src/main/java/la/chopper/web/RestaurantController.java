@@ -17,9 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/restaurant")
@@ -30,8 +28,6 @@ public class RestaurantController extends BaseController {
     private CatalogService catalogService;
 
     private GoodsService goodsService;
-
-    private Set<Integer> tableSet;
 
     @Autowired
     public void setRestaurantService(RestaurantService restaurantService) {
@@ -118,9 +114,9 @@ public class RestaurantController extends BaseController {
             setSessionRestaurant(request, dbRestaurant);
             setSessionTableNum(request, tableNum);
         } else {
-            Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
-            restaurant.setRestaurantPassword("");
-            setSessionRestaurant(request, restaurant);
+            Restaurant dbRestaurant = restaurantService.getRestaurantById(restaurantId);
+            dbRestaurant.setRestaurantPassword("");
+            setSessionRestaurant(request, dbRestaurant);
             setSessionTableNum(request, tableNum);
             List<Catalog> catalogList = catalogService.selectCatalogByRestaurantId(restaurantId);
             List<List> list = new ArrayList<>();
@@ -138,9 +134,9 @@ public class RestaurantController extends BaseController {
         return mav;
     }
 
-    @RequestMapping(value = "/validate", method = RequestMethod.POST)
+    @RequestMapping(value = "/registerValidate", method = RequestMethod.POST)
     @ResponseBody
-    public Restaurant validate(Restaurant restaurant) {
+    public Restaurant registerValidate(Restaurant restaurant) {
         if (restaurantService.getRestaurantByPhone(restaurant.getRestaurantPhone()) != null) {
             return restaurant;
         } else {
@@ -187,13 +183,6 @@ public class RestaurantController extends BaseController {
             mav.setViewName("restaurant/login");
             return mav;
         } else {
-            if (getSessionTableSet(request) == null) {
-                tableSet = new HashSet<>();
-                for (int i = 1; i <= restaurantService.getRestaurantById(restaurantId).getRestaurantTable(); i++) {
-                    tableSet.add(i);
-                }
-                setSessionTableSet(request, tableSet);
-            }
             mav.addObject("restaurantInfo", getSessionRestaurant(request));
             mav.setViewName("restaurant/managerPage");
             return mav;
