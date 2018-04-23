@@ -77,7 +77,7 @@ $(function () {
         var array = new Array();
         for (var key of map) {
             var temp = key.toString().split(",");
-            var json = '{"goodsId":' + temp[0] + ',"goodsCount":' + temp[1] + "}";
+            var json = '{"goodsId":' +'"' + temp[0] + '"' + ',"goodsCount":' + '"' + temp[1] + '"' + "}";
             array.push(json);
         }
         for (var i = 0; i < array.length; i++) {
@@ -87,10 +87,12 @@ $(function () {
                 var temp = order + array[i] + "]";
                 order = temp;
             } else {
-                var temp = order + array[i];
+                var temp = order + array[i] + ",";
                 order = temp;
             }
         }
+
+        console.log(order);
 
         $.ajax({
             headers: {
