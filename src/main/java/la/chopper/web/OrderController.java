@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.TextMessage;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,14 +34,6 @@ public class OrderController extends BaseController {
         this.orderService = orderService;
     }
 
-    public OrderService getOrderService() {
-        return orderService;
-    }
-
-    public WebSocketUtils getWebSocketHandler() {
-        return webSocketHandler;
-    }
-
     @Autowired
     public void setWebSocketHandler(WebSocketUtils webSocketHandler) {
         this.webSocketHandler = webSocketHandler;
@@ -60,15 +51,9 @@ public class OrderController extends BaseController {
         if (orderMap.get(request) == null) {
             if (details != null) {
                 TextMessage message = new TextMessage(JSON.toJSONString(details));
-                try {
                     orderMap.put(request, getSessionTableNum(request));
                     request.getSession().setAttribute("detailList", details);
-                    webSocketHandler.sendMessage(message);
                     result.setResult("true");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    result.setResult("false");
-                }
             }
             return result;
         } else if (orderMap.get(request) == getSessionTableNum(request)) {

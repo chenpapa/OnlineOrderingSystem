@@ -21,7 +21,7 @@
 
     <!-- 将webSocketHandler映射到"/communication" -->
     <websocket:handlers>
-        <websocket:mapping path="/communication" handler="webSocketHandler"/>
+        <websocket:mapping path="/{restaurantId}" handler="webSocketHandler"/>
     </websocket:handlers>
 
     <!-- 声明WebSocketUtils Bean -->

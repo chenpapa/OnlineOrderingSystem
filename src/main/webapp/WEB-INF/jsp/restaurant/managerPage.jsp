@@ -287,34 +287,28 @@
                         订单金额：<br>
                     </div>
                     <div class="tile-foote">
-                        <a class="btn btn-primary"data-id="${i}">查看</a>
+                        <a class="btn btn-primary" data-id="${i}">查看</a>
                     </div>
                 </div>
             </div>
         </c:forEach>
     </div>
 </main>
-<!-- Essential javascripts for application to work-->
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
-<!-- The javascript plugin to display page loading on top-->
 <script src="${pageContext.request.contextPath}/js/plugins/pace.min.js"></script>
-<!-- Page specific javascripts-->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/plugins/chart.js"></script>
 <script type="text/javascript">
 
-    var url = 'ws://' + window.location.host + '<%=request.getContextPath()%>/communication';
+    var url = 'ws://' + window.location.host + '<%=request.getContextPath()%>/' + '${restaurantInfo.restaurantId}';
     var sock = new WebSocket(url);
 
     sock.onopen = function () {
-        console.log("连接成功！");
-        sock.send("连接成功！");
     }
 
     sock.onmessage = function (ev) {
-        JSON.
     }
     var data = {
         labels: ["January", "February", "March", "April", "May"],

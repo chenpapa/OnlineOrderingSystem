@@ -6,6 +6,8 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * handleTextMessage():处理文本消息类型
@@ -14,28 +16,23 @@ import java.io.IOException;
  */
 public class WebSocketUtils extends AbstractWebSocketHandler {
 
-    private WebSocketSession session;
+    private static final Map<Long, WebSocketSession> restaurantWebSocketSession;
 
-    public WebSocketSession getSession() {
-        return session;
-    }
+    private static final String RESTAURANT_ID = "restaurantId";
 
-    public void setSession(WebSocketSession session) {
-        this.session = session;
+    static {
+        restaurantWebSocketSession = new HashMap<>();
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-        //处理文本消息
-        System.out.println("收到消息：" + message.getPayload());
-
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println("建立连接");
-        setSession(session);
+        String restaurantId = session.getUri().toString().replaceAll("/", "");
+        restaurantWebSocketSession.put(Long.valueOf(restaurantId), session);
     }
 
     @Override
@@ -43,8 +40,44 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
 
     }
 
-    public void sendMessage(TextMessage message) throws IOException {
-        getSession().sendMessage(message);
+    /**
+     * 获取餐厅标识
+     *
+     * @param session
+     * @return
+     */
+    private Long getRestaurantId(WebSocketSession session) {
+        try {
+            long restaurantId = (long) session.getAttributes().get(RESTAURANT_ID);
+            return restaurantId;
+        } catch (Exception e) {
+            return null;
+        }
     }
+
+    /**
+     * 发送消息给指定餐厅
+     *
+     * @param restaurantId
+     * @param message
+     * @return
+     */
+    public boolean sendMessageToRestaurant(long restaurantId, TextMessage message) {
+        if (restaurantWebSocketSession.get(restaurantId) == null) {
+            return false;
+        }
+        WebSocketSession session = restaurantWebSocketSession.get(restaurantId);
+        if (!session.isOpen()) {
+            return false;
+        }
+        try {
+            session.sendMessage(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 
 }
