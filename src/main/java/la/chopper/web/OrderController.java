@@ -44,16 +44,25 @@ public class OrderController extends BaseController {
         this.restaurantService = restaurantService;
     }
 
+    @RequestMapping("/createOrder")
+    public String createOrder() {
+        return "order/createOrder";
+    }
+
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     @ResponseBody
     public DataResult createOrder(HttpServletRequest request, @RequestBody List<Detail> details) {
+        System.out.println(details.toString());
         DataResult result = new DataResult();
         if (orderMap.get(request) == null) {
             if (details != null) {
                 TextMessage message = new TextMessage(JSON.toJSONString(details));
-                    orderMap.put(request, getSessionTableNum(request));
-                    request.getSession().setAttribute("detailList", details);
-                    result.setResult("true");
+                orderMap.put(request, getSessionTableNum(request));
+                request.getSession().setAttribute("detailList", details);
+                if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
+                    result.setResult("false");
+                }
+                result.setResult("true");
             }
             return result;
         } else if (orderMap.get(request) == getSessionTableNum(request)) {
