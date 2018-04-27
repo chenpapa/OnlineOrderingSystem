@@ -1,11 +1,7 @@
 package la.chopper.web;
 
-import la.chopper.domain.Catalog;
-import la.chopper.domain.Restaurant;
-import la.chopper.domain.Staff;
-import la.chopper.domain.User;
+import la.chopper.domain.*;
 import la.chopper.utils.CommonConstant;
-import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,26 +86,12 @@ public class BaseController {
         return (Catalog) request.getSession().getAttribute(CommonConstant.CATALOG_CONTEXT);
     }
 
-    protected void setSessionTableNum(HttpServletRequest request, int tableNum) {
+    protected void setSessionTableNum(HttpServletRequest request, Table tableNum) {
         request.getSession().setAttribute(CommonConstant.TABLENUM_CONTEXT, tableNum);
     }
 
-    protected Integer getSessionTableNum(HttpServletRequest request) {
-        return (Integer) request.getSession().getAttribute(CommonConstant.TABLENUM_CONTEXT);
+    protected Table getSessionTableNum(HttpServletRequest request) {
+        return (Table) request.getSession().getAttribute(CommonConstant.TABLENUM_CONTEXT);
     }
 
-
-
-    /**
-     * 获取基于应用程序的url绝对路径
-     *
-     * @param request
-     * @param url     以"/"打头的URL地址
-     * @return 基于应用程序的url绝对路径
-     */
-    public final String getAppbaseUrl(HttpServletRequest request, String url) {
-        Assert.hasLength(url, "url不能为空");
-        Assert.isTrue(url.startsWith("/"), "必须以/打头");
-        return request.getContextPath() + url;
-    }
 }

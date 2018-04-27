@@ -29,6 +29,10 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
 
     }
 
+    public static Map<Long, WebSocketSession> getRestaurantWebSocketSession() {
+        return restaurantWebSocketSession;
+    }
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String restaurantId = session.getUri().toString().replaceAll("/", "");
@@ -37,7 +41,8 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
+        String restaurantId = session.getUri().toString().replaceAll("/", "");
+        restaurantWebSocketSession.remove(restaurantId);
     }
 
     /**

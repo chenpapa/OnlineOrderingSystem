@@ -1,9 +1,6 @@
 package la.chopper.web;
 
-import la.chopper.domain.Catalog;
-import la.chopper.domain.DataResult;
-import la.chopper.domain.Goods;
-import la.chopper.domain.Restaurant;
+import la.chopper.domain.*;
 import la.chopper.service.CatalogService;
 import la.chopper.service.GoodsService;
 import la.chopper.service.RestaurantService;
@@ -112,12 +109,16 @@ public class RestaurantController extends BaseController {
             dbRestaurant.setRestaurantPassword("");
             mav.addObject("restaurantInfo", dbRestaurant);
             setSessionRestaurant(request, dbRestaurant);
-            setSessionTableNum(request, tableNum);
+            Table table = new Table();
+            table.setTableNum(tableNum);
+            setSessionTableNum(request, table);
         } else {
             Restaurant dbRestaurant = restaurantService.getRestaurantById(restaurantId);
             dbRestaurant.setRestaurantPassword("");
             setSessionRestaurant(request, dbRestaurant);
-            setSessionTableNum(request, tableNum);
+            Table table = new Table();
+            table.setTableNum(tableNum);
+            setSessionTableNum(request, table);
             List<Catalog> catalogList = catalogService.selectCatalogByRestaurantId(restaurantId);
             List<List> list = new ArrayList<>();
             for (Catalog catalog : catalogList

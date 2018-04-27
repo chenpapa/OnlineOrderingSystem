@@ -113,7 +113,8 @@ public class UserController extends BaseController {
             result.setResult("false");
             return result;
         } else {
-            setSessionUser(request, user);
+            dbUser.setUserPassword("");
+            setSessionUser(request, dbUser);
             result.setResult("true");
             return result;
         }

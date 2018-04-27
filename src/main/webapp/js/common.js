@@ -107,8 +107,10 @@ $(function () {
             success: function (data) {
                 if (data.result == "true") {
                     location = "http://localhost:8080/order/createOrder";
+                } else if (data.result = "close") {
+                    warning("餐厅目前暂未营业,无法下单！");
                 } else {
-                    warning("订单生成失败，请重新下单");
+                    warning("系统出现异常，请重新下单！");
                 }
             }
         });

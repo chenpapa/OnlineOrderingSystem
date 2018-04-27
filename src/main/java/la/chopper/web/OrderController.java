@@ -1,9 +1,7 @@
 package la.chopper.web;
 
 import com.alibaba.fastjson.JSON;
-import la.chopper.domain.DataResult;
-import la.chopper.domain.Detail;
-import la.chopper.domain.Order;
+import la.chopper.domain.*;
 import la.chopper.service.OrderService;
 import la.chopper.service.RestaurantService;
 import la.chopper.utils.WebSocketUtils;
@@ -11,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -52,28 +49,43 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     @ResponseBody
     public DataResult createOrder(HttpServletRequest request, @RequestBody List<Detail> details) {
-        System.out.println(details.toString());
         DataResult result = new DataResult();
-        if (orderMap.get(request) == null) {
-            if (details != null) {
-                TextMessage message = new TextMessage(JSON.toJSONString(details));
-                orderMap.put(request, getSessionTableNum(request));
-                request.getSession().setAttribute("detailList", details);
-                if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
-                    result.setResult("false");
-                }
-                result.setResult("true");
-            }
-            return result;
-        } else if (orderMap.get(request) == getSessionTableNum(request)) {
-            for (Detail detail : details) {
-                List<Detail> list = (List<Detail>) request.getSession().getAttribute("detailList");
-                list.add(detail);
-            }
+        WebSocketSession websocketSession = WebSocketUtils.getRestaurantWebSocketSession().get(getSessionRestaurant(request).getRestaurantId());
+        //判断餐厅营业状态
+        if (websocketSession == null) {
+            result.setResult("close");
             return result;
         } else {
-            result.setResult("false");
-            return result;
+            if (orderMap.get(request) == null) {
+                if (details != null) {
+                    Set temp = new HashSet();
+                    Table table = getSessionTableNum(request);
+                    User user = getSessionUser(request);
+                    temp.add(table);
+                    temp.add(user);
+                    for (Detail detail : details) {
+                        temp.add(detail);
+                    }
+                    TextMessage message = new TextMessage(JSON.toJSONString(temp));
+                    System.out.println(JSON.toJSONString(temp));
+                    orderMap.put(request, getSessionTableNum(request).getTableNum());
+                    request.getSession().setAttribute("detailList", details);
+                    if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
+                        result.setResult("false");
+                    }
+                    result.setResult("true");
+                }
+                return result;
+            } else if (orderMap.get(request) == getSessionTableNum(request).getTableNum()) {
+                for (Detail detail : details) {
+                    List<Detail> list = (List<Detail>) request.getSession().getAttribute("detailList");
+                    list.add(detail);
+                }
+                return result;
+            } else {
+                result.setResult("false");
+                return result;
+            }
         }
     }
 
