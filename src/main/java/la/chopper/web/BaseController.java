@@ -86,12 +86,12 @@ public class BaseController {
         return (Catalog) request.getSession().getAttribute(CommonConstant.CATALOG_CONTEXT);
     }
 
-    protected void setSessionTableNum(HttpServletRequest request, Table tableNum) {
+    protected void setSessionTableNum(HttpServletRequest request, int tableNum) {
         request.getSession().setAttribute(CommonConstant.TABLENUM_CONTEXT, tableNum);
     }
 
-    protected Table getSessionTableNum(HttpServletRequest request) {
-        return (Table) request.getSession().getAttribute(CommonConstant.TABLENUM_CONTEXT);
+    protected Integer getSessionTableNum(HttpServletRequest request) {
+        return (Integer) request.getSession().getAttribute(CommonConstant.TABLENUM_CONTEXT);
     }
 
 }

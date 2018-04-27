@@ -109,20 +109,15 @@ public class RestaurantController extends BaseController {
             dbRestaurant.setRestaurantPassword("");
             mav.addObject("restaurantInfo", dbRestaurant);
             setSessionRestaurant(request, dbRestaurant);
-            Table table = new Table();
-            table.setTableNum(tableNum);
-            setSessionTableNum(request, table);
+            setSessionTableNum(request, tableNum);
         } else {
             Restaurant dbRestaurant = restaurantService.getRestaurantById(restaurantId);
             dbRestaurant.setRestaurantPassword("");
             setSessionRestaurant(request, dbRestaurant);
-            Table table = new Table();
-            table.setTableNum(tableNum);
-            setSessionTableNum(request, table);
+            setSessionTableNum(request, tableNum);
             List<Catalog> catalogList = catalogService.selectCatalogByRestaurantId(restaurantId);
             List<List> list = new ArrayList<>();
-            for (Catalog catalog : catalogList
-                    ) {
+            for (Catalog catalog : catalogList) {
                 List<Goods> goodsList = goodsService.selectGoodsBycatalogId(catalog.getCatalogId());
                 list.add(goodsList);
             }

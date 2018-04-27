@@ -58,17 +58,11 @@ public class OrderController extends BaseController {
         } else {
             if (orderMap.get(request) == null) {
                 if (details != null) {
-                    Set temp = new HashSet();
-                    Table table = getSessionTableNum(request);
-                    User user = getSessionUser(request);
-                    temp.add(table);
-                    temp.add(user);
-                    for (Detail detail : details) {
-                        temp.add(detail);
-                    }
-                    TextMessage message = new TextMessage(JSON.toJSONString(temp));
-                    System.out.println(JSON.toJSONString(temp));
-                    orderMap.put(request, getSessionTableNum(request).getTableNum());
+                    String json = JSON.toJSONString(details);
+                    String temp = "{\"userName\":" + "\"" + getSessionUser(request).getUserName() + "\"" + ",\"tableNum\":" + getSessionTableNum(request) + ",order=" + json + "}";
+                    TextMessage message = new TextMessage(temp);
+                    System.out.println(temp);
+                    orderMap.put(request, getSessionTableNum(request));
                     request.getSession().setAttribute("detailList", details);
                     if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
                         result.setResult("false");
@@ -76,7 +70,7 @@ public class OrderController extends BaseController {
                     result.setResult("true");
                 }
                 return result;
-            } else if (orderMap.get(request) == getSessionTableNum(request).getTableNum()) {
+            } else if (orderMap.get(request) == getSessionTableNum(request)) {
                 for (Detail detail : details) {
                     List<Detail> list = (List<Detail>) request.getSession().getAttribute("detailList");
                     list.add(detail);
