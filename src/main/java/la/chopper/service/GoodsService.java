@@ -61,4 +61,12 @@ public class GoodsService {
         }
         return false;
     }
+
+    public Goods selectGoodsByPrimaryKey(Long goodsId) {
+        if (goodsId == null) {
+            return null;
+        } else {
+            return goodsMapper.selectByPrimaryKey(goodsId);
+        }
+    }
 }

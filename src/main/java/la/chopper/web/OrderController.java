@@ -1,8 +1,10 @@
 package la.chopper.web;
 
 import com.alibaba.fastjson.JSON;
-import la.chopper.domain.*;
-import la.chopper.service.DetailService;
+import la.chopper.domain.DataResult;
+import la.chopper.domain.Detail;
+import la.chopper.domain.Order;
+import la.chopper.service.GoodsService;
 import la.chopper.service.OrderService;
 import la.chopper.service.RestaurantService;
 import la.chopper.utils.WebSocketUtils;
@@ -14,7 +16,9 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/order")
@@ -22,7 +26,7 @@ public class OrderController extends BaseController {
 
     private OrderService orderService;
 
-    private DetailService detailService;
+    private GoodsService goodsService;
 
     private WebSocketUtils webSocketHandler;
 
@@ -46,16 +50,17 @@ public class OrderController extends BaseController {
     }
 
     @Autowired
-    public void setDetailService(DetailService detailService) {
-        this.detailService = detailService;
+    public void setGoodsService(GoodsService goodsService) {
+        this.goodsService = goodsService;
     }
 
-    @RequestMapping("/createdOrder")
+    @RequestMapping("/createOrder")
     public ModelAndView createdOrder(HttpServletRequest request) {
         List<Detail> detailList = getSessionDetails(request);
         ModelAndView mav = new ModelAndView();
+        mav.addObject("userInfo", getSessionUser(request));
         mav.addObject("detailList", detailList);
-        mav.setViewName("order/createdOrder");
+        mav.setViewName("order/createOrder");
         return mav;
     }
 
@@ -71,6 +76,10 @@ public class OrderController extends BaseController {
         } else {
             if (orderMap.get(request) == null) {
                 if (details != null) {
+                    for (Detail detail : details) {
+                        detail.setGoodsName(goodsService.selectGoodsByPrimaryKey(detail.getGoodsId()).getGoodsName());
+                        detail.setGoodsPrice(goodsService.selectGoodsByPrimaryKey(detail.getGoodsId()).getGoodsPrice());
+                    }
                     StringBuffer json = new StringBuffer("{\"tableNum\":");
                     json.append(getSessionTableNum(request));
                     json.append(",\"userName\":\"");
@@ -85,11 +94,7 @@ public class OrderController extends BaseController {
                         result.setResult("false");
                     } else {
                         result.setResult("true");
-                        List<Detail> userDetail = new ArrayList<>();
-                        for (Detail detail : details) {
-                            userDetail.add(detailService.selectDetailbyGoodsId(detail.getGoodsId()));
-                        }
-                        setSessionDetails(request, userDetail);
+                        setSessionDetails(request, details);
                     }
                 }
                 return result;
