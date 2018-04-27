@@ -11,8 +11,13 @@
     <meta name="format-detection" content="telephone=no"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.5.css">
     <title>订单明细</title>
+
 </head>
 <body>
+<c:set var="count" value="0"></c:set>
+<c:forEach var="detail" items="${detailList}">
+    <c:set var="count" value="${count + detail.goodsCount}"></c:set>
+</c:forEach>
 <div id="app-placeholder" class="transparent-container">
     <div data-reactroot="" class="order-dinner-cart o-flex o-flex--column">
         <div class="order-dinner-cart-inner">
@@ -22,7 +27,10 @@
                         <div class="sync-order-cart__header of">
                             <p class="sync-order-cart__title">
                                 订单明细
-                                <span>(共3份)
+                                <span>
+                                    (共
+                                    ${count}
+                                    份)
                                 </span>
                             </p>
                         </div>
@@ -35,7 +43,7 @@
                                              alt="用户头像">
                                         <p class="option-user-name">${userInfo.userName} 先生</p>
                                     </a>
-                                        <p class="dish-count">共 3 份</p>
+                                        <p class="dish-count">共 ${count} 份</p>
                                     </div>
                                 </div>
                             </div>
