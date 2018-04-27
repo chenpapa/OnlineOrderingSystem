@@ -5,6 +5,8 @@ public class Detail extends BaseDomain {
 
     private Long goodsId;
 
+    private String goodsName;
+
     private Long goodsPrice;
 
     private Long goodsDiscount;
@@ -25,6 +27,14 @@ public class Detail extends BaseDomain {
 
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName == null ? null : goodsName.trim();
     }
 
     public Long getGoodsPrice() {

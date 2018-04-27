@@ -12,4 +12,6 @@ public interface DetailMapper {
     List<Detail> selectDetailByOrderId(Long orderId);
 
     int deleteDetailByOrderId(Long orderId);
+
+    Detail selectDetailByGoodsId(Long goodsId);
 }

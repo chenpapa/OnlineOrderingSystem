@@ -2,12 +2,14 @@ package la.chopper.web;
 
 import com.alibaba.fastjson.JSON;
 import la.chopper.domain.*;
+import la.chopper.service.DetailService;
 import la.chopper.service.OrderService;
 import la.chopper.service.RestaurantService;
 import la.chopper.utils.WebSocketUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -19,6 +21,8 @@ import java.util.*;
 public class OrderController extends BaseController {
 
     private OrderService orderService;
+
+    private DetailService detailService;
 
     private WebSocketUtils webSocketHandler;
 
@@ -41,9 +45,18 @@ public class OrderController extends BaseController {
         this.restaurantService = restaurantService;
     }
 
-    @RequestMapping("/createOrder")
-    public String createOrder() {
-        return "order/createOrder";
+    @Autowired
+    public void setDetailService(DetailService detailService) {
+        this.detailService = detailService;
+    }
+
+    @RequestMapping("/createdOrder")
+    public ModelAndView createdOrder(HttpServletRequest request) {
+        List<Detail> detailList = getSessionDetails(request);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("detailList", detailList);
+        mav.setViewName("order/createdOrder");
+        return mav;
     }
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
@@ -58,16 +71,26 @@ public class OrderController extends BaseController {
         } else {
             if (orderMap.get(request) == null) {
                 if (details != null) {
-                    String json = JSON.toJSONString(details);
-                    String temp = "{\"userName\":" + "\"" + getSessionUser(request).getUserName() + "\"" + ",\"tableNum\":" + getSessionTableNum(request) + ",order=" + json + "}";
-                    TextMessage message = new TextMessage(temp);
-                    System.out.println(temp);
+                    StringBuffer json = new StringBuffer("{\"tableNum\":");
+                    json.append(getSessionTableNum(request));
+                    json.append(",\"userName\":\"");
+                    json.append(getSessionUser(request).getUserName());
+                    json.append("\",\"order\":");
+                    json.append(JSON.toJSONString(details));
+                    json.append("}");
+                    TextMessage message = new TextMessage(json);
                     orderMap.put(request, getSessionTableNum(request));
                     request.getSession().setAttribute("detailList", details);
                     if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
                         result.setResult("false");
+                    } else {
+                        result.setResult("true");
+                        List<Detail> userDetail = new ArrayList<>();
+                        for (Detail detail : details) {
+                            userDetail.add(detailService.selectDetailbyGoodsId(detail.getGoodsId()));
+                        }
+                        setSessionDetails(request, userDetail);
                     }
-                    result.setResult("true");
                 }
                 return result;
             } else if (orderMap.get(request) == getSessionTableNum(request)) {
@@ -75,6 +98,8 @@ public class OrderController extends BaseController {
                     List<Detail> list = (List<Detail>) request.getSession().getAttribute("detailList");
                     list.add(detail);
                 }
+                result.setResult("true");
+                setSessionDetails(request, (List<Detail>) request.getSession().getAttribute("detailList"));
                 return result;
             } else {
                 result.setResult("false");

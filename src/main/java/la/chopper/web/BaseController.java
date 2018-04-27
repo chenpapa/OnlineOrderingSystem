@@ -4,6 +4,7 @@ import la.chopper.domain.*;
 import la.chopper.utils.CommonConstant;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class BaseController {
     protected static final String ERROR_MSG_KEY = "errorMsg";
@@ -92,6 +93,20 @@ public class BaseController {
 
     protected Integer getSessionTableNum(HttpServletRequest request) {
         return (Integer) request.getSession().getAttribute(CommonConstant.TABLENUM_CONTEXT);
+    }
+
+    /**
+     * 保存明细list到session中
+     *
+     * @param request
+     * @param details
+     */
+    protected void setSessionDetails(HttpServletRequest request, List<Detail> details) {
+        request.getSession().setAttribute(CommonConstant.DETAILS_CONTEXT, details);
+    }
+
+    protected List<Detail> getSessionDetails(HttpServletRequest request) {
+        return (List<Detail>) request.getSession().getAttribute(CommonConstant.DETAILS_CONTEXT);
     }
 
 }

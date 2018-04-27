@@ -30,6 +30,8 @@ public class CommonConstant {
 
     public static final String TABLESET_CONTEXT = "TABLESET_CONTEXT";
 
+    public static final String DETAILS_CONTEXT = "DETAILS_CONTEXT";
+
     /**
      * 每页的记录数
      */

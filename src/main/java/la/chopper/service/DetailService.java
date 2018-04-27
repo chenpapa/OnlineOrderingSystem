@@ -71,4 +71,17 @@ public class DetailService {
             return false;
         }
     }
+
+    public Detail selectDetailbyGoodsId(Long goodsId) {
+        if (goodsId >= 0) {
+            Detail detail = detailMapper.selectDetailByGoodsId(goodsId);
+            if (detail == null) {
+                return null;
+            } else {
+                return detail;
+            }
+        } else {
+            return null;
+        }
+    }
 }

@@ -37,12 +37,14 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String restaurantId = session.getUri().toString().replaceAll("/", "");
         restaurantWebSocketSession.put(Long.valueOf(restaurantId), session);
+        System.out.println("established");
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         String restaurantId = session.getUri().toString().replaceAll("/", "");
-        restaurantWebSocketSession.remove(restaurantId);
+        restaurantWebSocketSession.remove(Long.valueOf(restaurantId));
+        System.out.println("closed");
     }
 
     /**

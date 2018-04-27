@@ -4,18 +4,20 @@
     <resultMap id="BaseResultMap" type="la.chopper.domain.Detail">
         <result column="order_id" property="orderId" jdbcType="BIGINT"/>
         <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
         <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL"/>
         <result column="goods_discount" property="goodsDiscount" jdbcType="DECIMAL"/>
         <result column="goods_count" property="goodsCount" jdbcType="TINYINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        order_id, goods_id, goods_price, goods_discount, goods_count
+        order_id, goods_id, goods_name, goods_price, goods_discount, goods_count
     </sql>
     <insert id="insert" parameterType="la.chopper.domain.Detail">
-        INSERT INTO detail (order_id, goods_id, goods_price,
+        INSERT INTO detail (order_id, goods_id, goods_name, goods_price,
                             goods_discount, goods_count)
-        VALUES (#{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsPrice,jdbcType=DECIMAL},
-                #{goodsDiscount,jdbcType=DECIMAL}, #{goodsCount,jdbcType=TINYINT})
+        VALUES (#{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR},
+                #{goodsPrice,jdbcType=DECIMAL}, #{goodsDiscount,jdbcType=DECIMAL},
+                #{goodsCount,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="la.chopper.domain.Detail">
         insert into detail
@@ -25,6 +27,9 @@
             </if>
             <if test="goodsId != null">
                 goods_id,
+            </if>
+            <if test="goodsName != null" >
+                goods_name,
             </if>
             <if test="goodsPrice != null">
                 goods_price,
@@ -43,6 +48,9 @@
             <if test="goodsId != null">
                 #{goodsId,jdbcType=BIGINT},
             </if>
+            <if test="goodsName != null" >
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
             <if test="goodsPrice != null">
                 #{goodsPrice,jdbcType=DECIMAL},
             </if>
@@ -59,6 +67,12 @@
         <include refid="Base_Column_List"/>
         FROM detail
         WHERE order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+    <select id="selectDetailByGoodsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM detail
+        WHERE goods_id = #{goodsId,jdbcType=BIGINT}
     </select>
     <delete id="deleteDetailByOrderId" parameterType="java.lang.Long">
         DELETE FROM detail
