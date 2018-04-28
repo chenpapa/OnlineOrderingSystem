@@ -10,13 +10,18 @@
     <meta http-equiv="pragma" content="no-cache"/>
     <meta name="format-detection" content="telephone=no"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.5.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
     <title>订单明细</title>
 
 </head>
 <body>
 <c:set var="count" value="0"></c:set>
+<c:set var="totalPrice" value="0"></c:set>
 <c:forEach var="detail" items="${detailList}">
     <c:set var="count" value="${count + detail.goodsCount}"></c:set>
+</c:forEach>
+<c:forEach var="detail" items="${detailList}">
+    <c:set var="totalPrice" value="${totalPrice + detail.goodsCount * detail.goodsPrice}"></c:set>
 </c:forEach>
 <div id="app-placeholder" class="transparent-container">
     <div data-reactroot="" class="order-dinner-cart o-flex o-flex--column">
@@ -66,6 +71,19 @@
                                 </c:forEach>
                             </div>
 
+                            <div class="footer">
+                                <div class="left">
+                                    已选：
+                                    <span id="cartN">
+			<span id="totalcountshow">
+                ${count}
+            </span>份　总计：￥<span id="totalpriceshow">${totalPrice}</span></span>元
+                                </div>
+                                <div class="right">
+                                    <button id="btnselect" class="xhlbtn">返回首页</button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -75,6 +93,14 @@
 
 </div>
 </div>
+<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+<script>
+    $(function () {
+        $(".xhlbtn").click(function () {
+            location = "http://localhost:8080/restaurant/frontend";
+        });
+    });
+</script>
 </body>
 </html>
 

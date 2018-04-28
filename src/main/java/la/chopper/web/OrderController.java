@@ -68,6 +68,7 @@ public class OrderController extends BaseController {
     @ResponseBody
     public DataResult createOrder(HttpServletRequest request, @RequestBody List<Detail> details) {
         DataResult result = new DataResult();
+        //通过restaurantId获取WebSocketSession
         WebSocketSession websocketSession = WebSocketUtils.getRestaurantWebSocketSession().get(getSessionRestaurant(request).getRestaurantId());
         //判断餐厅营业状态
         if (websocketSession == null) {
@@ -80,6 +81,7 @@ public class OrderController extends BaseController {
                         detail.setGoodsName(goodsService.selectGoodsByPrimaryKey(detail.getGoodsId()).getGoodsName());
                         detail.setGoodsPrice(goodsService.selectGoodsByPrimaryKey(detail.getGoodsId()).getGoodsPrice());
                     }
+                    //转成json
                     StringBuffer json = new StringBuffer("{\"tableNum\":");
                     json.append(getSessionTableNum(request));
                     json.append(",\"userName\":\"");
@@ -88,8 +90,9 @@ public class OrderController extends BaseController {
                     json.append(JSON.toJSONString(details));
                     json.append("}");
                     TextMessage message = new TextMessage(json);
+                    //把request和餐桌号放入map中
                     orderMap.put(request, getSessionTableNum(request));
-                    request.getSession().setAttribute("detailList", details);
+                    //通过WebSocketSession发送订单信息给餐厅
                     if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
                         result.setResult("false");
                     } else {
@@ -98,13 +101,29 @@ public class OrderController extends BaseController {
                     }
                 }
                 return result;
-            } else if (orderMap.get(request) == getSessionTableNum(request)) {
+            } else if (orderMap.get(request).equals(getSessionTableNum(request))) {
+                //获取已有订单list
+                List<Detail> list = getSessionDetails(request);
                 for (Detail detail : details) {
-                    List<Detail> list = (List<Detail>) request.getSession().getAttribute("detailList");
                     list.add(detail);
                 }
+                //生成json数据
+                StringBuffer json = new StringBuffer("{\"tableNum\":");
+                json.append(getSessionTableNum(request));
+                json.append(",\"userName\":\"");
+                json.append(getSessionUser(request).getUserName());
+                json.append("\",\"order\":");
+                json.append(JSON.toJSONString(list));
+                json.append("}");
+                TextMessage message = new TextMessage(json);
+                if (!webSocketHandler.sendMessageToRestaurant(getSessionRestaurant(request).getRestaurantId(), message)) {
+                    result.setResult("false");
+                } else {
+                    result.setResult("true");
+                    setSessionDetails(request, details);
+                }
                 result.setResult("true");
-                setSessionDetails(request, (List<Detail>) request.getSession().getAttribute("detailList"));
+                setSessionDetails(request, list);
                 return result;
             } else {
                 result.setResult("false");
