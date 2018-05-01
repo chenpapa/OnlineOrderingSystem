@@ -1,6 +1,9 @@
 package la.chopper.web;
 
-import la.chopper.domain.*;
+import la.chopper.domain.Catalog;
+import la.chopper.domain.DataResult;
+import la.chopper.domain.Goods;
+import la.chopper.domain.Restaurant;
 import la.chopper.service.CatalogService;
 import la.chopper.service.GoodsService;
 import la.chopper.service.RestaurantService;

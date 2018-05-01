@@ -1,4 +1,4 @@
-package la.chopper.service;
+package la.chopper.service.impl;
 
 import la.chopper.domain.Common;
 import la.chopper.mapper.CommonMapper;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommonService {
+public class CommonServiceImpl {
 
     private CommonMapper commonMapper;
 
