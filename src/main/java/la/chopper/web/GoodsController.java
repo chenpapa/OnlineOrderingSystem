@@ -27,11 +27,6 @@ public class GoodsController extends BaseController {
         this.goodsService = goodsService;
     }
 
-    @RequestMapping("/addGoods")
-    public String addGoods() {
-        return "goods/createGoods";
-    }
-
     @RequestMapping(value = "/addGoods", method = RequestMethod.POST)
     public ModelAndView addGoods(HttpServletRequest request, Goods goods, MultipartFile file) {
         ModelAndView mav = new ModelAndView();

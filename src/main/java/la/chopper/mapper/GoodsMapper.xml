@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="la.chopper.domain.Goods">
         <id column="goods_id" property="goodsId" jdbcType="BIGINT"/>
         <result column="goods_catalog_id" property="goodsCatalogId" jdbcType="BIGINT"/>
+        <result column="goods_catalog_name" property="goodsCatalogName" jdbcType="VARCHAR"/>
         <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
         <result column="goods_pic" property="goodsPic" jdbcType="VARCHAR"/>
         <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL"/>
@@ -12,7 +13,7 @@
         <result column="goods_is_deleted" property="goodsIsDeleted" jdbcType="BIT"/>
     </resultMap>
     <sql id="Base_Column_List">
-        goods_id, goods_catalog_id, goods_name, goods_pic, goods_price, goods_discount, goods_status,
+        goods_id, goods_catalog_id, goods_catalog_name, goods_name, goods_pic, goods_price, goods_discount, goods_status,
         goods_is_deleted
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -32,12 +33,12 @@
         WHERE goods_id = #{goodsId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="la.chopper.domain.Goods">
-        INSERT INTO goods (goods_id, goods_catalog_id, goods_name,
-                           goods_pic, goods_price, goods_discount,
+        INSERT INTO goods (goods_id, goods_catalog_id, goods_catalog_name,
+                           goods_name, goods_pic, goods_price, goods_discount,
                            goods_status, goods_is_deleted)
         VALUES (#{goodsId,jdbcType=BIGINT}, #{goodsCatalogId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR},
-                #{goodsPic,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsDiscount,jdbcType=DECIMAL},
-                #{goodsStatus,jdbcType=BIT}, #{goodsIsDeleted,jdbcType=BIT})
+                #{goodsCatalogName,jdbcType=VARCHAR}, #{goodsPic,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL},
+                #{goodsDiscount,jdbcType=DECIMAL}, #{goodsStatus,jdbcType=BIT}, #{goodsIsDeleted,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="la.chopper.domain.Goods">
         insert into goods
@@ -47,6 +48,9 @@
             </if>
             <if test="goodsCatalogId != null">
                 goods_catalog_id,
+            </if>
+            <if test="goodsCatalogName != null">
+                goods_catalog_name,
             </if>
             <if test="goodsName != null">
                 goods_name,
@@ -74,6 +78,9 @@
             <if test="goodsCatalogId != null">
                 #{goodsCatalogId,jdbcType=BIGINT},
             </if>
+            <if test="goodsCatalogName != null">
+                #{goodsCatalogName,jdbcType=VARCHAR},
+            </if>
             <if test="goodsName != null">
                 #{goodsName,jdbcType=VARCHAR},
             </if>
@@ -100,6 +107,9 @@
             <if test="goodsCatalogId != null">
                 goods_catalog_id = #{goodsCatalogId,jdbcType=BIGINT},
             </if>
+            <if test="goodsCatalogName != null">
+                goods_catalog_name = #{goodsCatalogName,jdbcType=VARCHAR},
+            </if>
             <if test="goodsName != null">
                 goods_name = #{goodsName,jdbcType=VARCHAR},
             </if>
@@ -123,13 +133,14 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="la.chopper.domain.Goods">
         UPDATE goods
-        SET goods_catalog_id = #{goodsCatalogId,jdbcType=BIGINT},
-            goods_name       = #{goodsName,jdbcType=VARCHAR},
-            goods_pic        = #{goodsPic,jdbcType=VARCHAR},
-            goods_price      = #{goodsPrice,jdbcType=DECIMAL},
-            goods_discount   = #{goodsDiscount,jdbcType=DECIMAL},
-            goods_status     = #{goodsStatus,jdbcType=BIT},
-            goods_is_deleted = #{goodsIsDeleted,jdbcType=BIT}
+        SET goods_catalog_id   = #{goodsCatalogId,jdbcType=BIGINT},
+            goods_catalog_name = #{goodsCatalogName,jdbcType=VARCHAR},
+            goods_name         = #{goodsName,jdbcType=VARCHAR},
+            goods_pic          = #{goodsPic,jdbcType=VARCHAR},
+            goods_price        = #{goodsPrice,jdbcType=DECIMAL},
+            goods_discount     = #{goodsDiscount,jdbcType=DECIMAL},
+            goods_status       = #{goodsStatus,jdbcType=BIT},
+            goods_is_deleted   = #{goodsIsDeleted,jdbcType=BIT}
         WHERE goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
 </mapper>

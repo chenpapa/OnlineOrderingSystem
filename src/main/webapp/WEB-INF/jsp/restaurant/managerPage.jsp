@@ -1,7 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>${restaurantInfo.restaurantName}后台管理系统</title>
     <meta charset="utf-8">
@@ -12,6 +13,7 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 </head>
 
 <body class="app sidebar-mini rtl">
@@ -214,22 +216,28 @@
             </a>
             <ul class="treeview-menu">
                 <li>
-                    <a class="treeview-item" href="catalogPage.html">
+                    <label class="treeview-item cataloglist" href="#">
                         <i class="icon fa fa-circle-o"></i>
                         菜品列表
-                    </a>
+                    </label>
                 </li>
                 <li>
-                    <a class="treeview-item" href="catalogPage.html">
+                    <label class="treeview-item addnewcatalog" href="#">
+                        <i class="icon fa fa-circle-o"></i>
+                        添加菜系
+                    </label>
+                </li>
+                <li>
+                    <label class="treeview-item addnewgoods" href="#">
                         <i class="icon fa fa-circle-o"></i>
                         上传菜品
-                    </a>
+                    </label>
                 </li>
                 <li>
-                    <a class="treeview-item" href="catalogPage.html">
+                    <label class="treeview-item" href="<c:url value="/catalog/updateCatalog"/> ">
                         <i class="icon fa fa-circle-o"></i>
                         修改菜品
-                    </a>
+                    </label>
                 </li>
             </ul>
         </li>
@@ -269,11 +277,6 @@
     </ul>
 </aside>
 <main class="app-content">
-    <div class="app-title">
-        <div>
-            <h1><i class="fa fa-laptop"></i> 餐桌管理</h1>
-        </div>
-    </div>
     <div class="row">
         <c:forEach var="i" begin="1" end="${restaurantInfo.restaurantTable}" step="1">
             <div class="col-md-6">
@@ -355,8 +358,41 @@
     console.log(str);
 
     function changeTable() {
-
     }
+
+    $(function () {
+        $(".treeview-item.cataloglist").click(function () {
+            $.post("<c:url value="/catalog/selectCatalog/${restaurantInfo.restaurantId}"/>", function (data) {
+                    $(".row").html(data);
+                }
+            );
+        });
+    });
+
+    $(function () {
+        $(".treeview-item.addnewcatalog").click(function () {
+            $.post("<c:url value="/catalog/addNewCatalog"/>", function (data) {
+                    $(".row").html(data);
+                }
+            );
+        });
+    });
+
+    $(function () {
+        $(".btn.btn-default.submit-catalog").click(function () {
+            var catalogName = $("#catalogName").val();
+            var restaurantId = ${restaurantInfo.restaurantId};
+            $.post("${pageContext.request.contextPath}/catalog/addNewCatalog",{
+                "catalogRestaurant":restaurantId,
+                "catalogName":catalogName,
+                "catalogIsDeleted":false
+            },function () {
+                
+            });
+        });
+    });
+
+
 </script>
 </body>
 </html>
