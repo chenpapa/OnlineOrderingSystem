@@ -32,7 +32,12 @@ public class OrderController extends BaseController {
 
     private RestaurantService restaurantService;
 
-    private Map<HttpServletRequest, Integer> orderMap = new HashMap<>();
+    //用户订单
+    private static Map<HttpServletRequest, Integer> orderMap;
+
+    static {
+        orderMap = new HashMap<>();
+    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -134,8 +139,9 @@ public class OrderController extends BaseController {
 
     @RequestMapping("selectOrder/{orderId}")
     @ResponseBody
-    public Order selectOrder(@PathVariable("orderId") Long orderId) {
-        return orderService.selectOrderById(orderId);
+    public List<Detail> selectOrder(@PathVariable("orderId") int orderId, HttpServletRequest request) {
+
+        return getSessionDetails(request);
     }
 
     @RequestMapping("/selectOrder/{userId}")

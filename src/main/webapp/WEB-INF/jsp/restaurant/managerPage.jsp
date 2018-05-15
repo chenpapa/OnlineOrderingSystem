@@ -286,11 +286,11 @@
                         开桌时间：<br>
                         用餐状态：<br>
                         用餐人数：<br>
-                        已&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：<br>
+                        <%--已&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：<br>--%>
                         订单金额：<br>
                     </div>
                     <div class="tile-foote">
-                        <a class="btn btn-primary" data-id="${i}">查看</a>
+                        <a class="btn btn-primary" data-id="${i}" href="<c:url value="/order/selectOrder/${i}"/>">查看</a>
                     </div>
                 </div>
             </div>
