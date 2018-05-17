@@ -1,6 +1,9 @@
 package la.chopper.web;
 
+import la.chopper.domain.Catalog;
 import la.chopper.domain.Goods;
+import la.chopper.domain.Restaurant;
+import la.chopper.service.CatalogService;
 import la.chopper.service.GoodsService;
 import la.chopper.utils.RandomPictureName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,9 +26,45 @@ public class GoodsController extends BaseController {
 
     private GoodsService goodsService;
 
+    private CatalogService catalogService;
+
+    @Autowired
+    public void setCatalogService(CatalogService catalogService) {
+        this.catalogService = catalogService;
+    }
+
     @Autowired
     public void setGoodsService(GoodsService goodsService) {
         this.goodsService = goodsService;
+    }
+
+    @RequestMapping("/addGoods")
+    public ModelAndView addGoods(HttpServletRequest request) {
+        Restaurant restaurant = getSessionRestaurant(request);
+        List<Catalog> catalogList = catalogService.selectCatalogByRestaurantId(restaurant.getRestaurantId());
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("catalogList", catalogList);
+        mav.setViewName("goods/addGoods");
+        return mav;
+    }
+
+    @RequestMapping("/alterGoods")
+    public ModelAndView alterGoods(HttpServletRequest request) {
+        Restaurant restaurant = getSessionRestaurant(request);
+        List<Catalog> catalogList = catalogService.selectCatalogByRestaurantId(restaurant.getRestaurantId());
+        List<Goods> goodsArrayList = new ArrayList<>();
+        for (Catalog catalog : catalogList
+                ) {
+            List<Goods> goodsList = goodsService.selectGoodsBycatalogId(catalog.getCatalogId());
+            for (Goods goods : goodsList
+                    ) {
+                goodsArrayList.add(goods);
+            }
+        }
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("goodsList", goodsArrayList);
+        mav.setViewName("goods/alterGoods");
+        return mav;
     }
 
     @RequestMapping(value = "/addGoods", method = RequestMethod.POST)

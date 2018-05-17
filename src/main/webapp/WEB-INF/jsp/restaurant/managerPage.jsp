@@ -222,9 +222,9 @@
                     </label>
                 </li>
                 <li>
-                    <label class="treeview-item addnewcatalog" href="#">
+                    <label class="treeview-item addordeletecatalog" href="#">
                         <i class="icon fa fa-circle-o"></i>
-                        添加菜系
+                        菜系管理
                     </label>
                 </li>
                 <li>
@@ -234,7 +234,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="treeview-item" href="<c:url value="/catalog/updateCatalog"/> ">
+                    <label class="treeview-item alterGoods" href="#">
                         <i class="icon fa fa-circle-o"></i>
                         修改菜品
                     </label>
@@ -286,7 +286,7 @@
                         开桌时间：<br>
                         用餐状态：<br>
                         用餐人数：<br>
-                        <%--已&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：<br>--%>
+                            <%--已&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：<br>--%>
                         订单金额：<br>
                     </div>
                     <div class="tile-foote">
@@ -370,8 +370,8 @@
     });
 
     $(function () {
-        $(".treeview-item.addnewcatalog").click(function () {
-            $.post("<c:url value="/catalog/addNewCatalog"/>", function (data) {
+        $(".treeview-item.addordeletecatalog").click(function () {
+            $.get("<c:url value="/catalog/addOrDeleteCatalog"/>", function (data) {
                     $(".row").html(data);
                 }
             );
@@ -379,15 +379,31 @@
     });
 
     $(function () {
+        $(".treeview-item.addnewgoods").click(function () {
+            $.get("<c:url value="/goods/addGoods"/>",function (data) {
+                $(".row").html(data);
+            });
+        });
+    });
+
+    $(function () {
+        $(".treeview-item.alterGoods").click(function () {
+            $.get("<c:url value="/goods/alterGoods"/>",function (data) {
+                $(".row").html(data);
+            });
+        });
+    });
+
+    $(function () {
         $(".btn.btn-default.submit-catalog").click(function () {
             var catalogName = $("#catalogName").val();
             var restaurantId = ${restaurantInfo.restaurantId};
-            $.post("${pageContext.request.contextPath}/catalog/addNewCatalog",{
-                "catalogRestaurant":restaurantId,
-                "catalogName":catalogName,
-                "catalogIsDeleted":false
-            },function () {
-                
+            $.post("${pageContext.request.contextPath}/catalog/addNewCatalog", {
+                "catalogRestaurant": restaurantId,
+                "catalogName": catalogName,
+                "catalogIsDeleted": false
+            }, function () {
+
             });
         });
     });

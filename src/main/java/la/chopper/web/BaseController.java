@@ -30,26 +30,6 @@ public class BaseController {
         return (User) request.getSession().getAttribute(CommonConstant.USER_CONTEXT);
     }
 
-    /**
-     * 保存员工对象到Session中
-     *
-     * @param request
-     * @param staff
-     */
-    protected void setSessionStaff(HttpServletRequest request, Staff staff) {
-        request.getSession().setAttribute(CommonConstant.STAFF_CONTEXT,
-                staff);
-    }
-
-    /**
-     * 获取保存在Session中的员工对象
-     *
-     * @param request
-     * @return
-     */
-    protected Staff getSessionStaff(HttpServletRequest request) {
-        return (Staff) request.getSession().getAttribute(CommonConstant.STAFF_CONTEXT);
-    }
 
     /**
      * 保存餐厅对象到Session中

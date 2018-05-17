@@ -1,6 +1,7 @@
 package la.chopper.web;
 
 import la.chopper.domain.Catalog;
+import la.chopper.domain.Restaurant;
 import la.chopper.service.CatalogService;
 import la.chopper.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,21 @@ public class CatalogController extends BaseController {
         } else {
             return null;
         }
+    }
+
+    @RequestMapping("/addOrDeleteCatalog")
+    public ModelAndView addOrDeleteCatalog(HttpServletRequest request) {
+        Restaurant restaurant = getSessionRestaurant(request);
+        Long restaurantId = restaurant.getRestaurantId();
+        List<Catalog> catalogList = catalogService.selectCatalogByRestaurantId(restaurantId);
+        for (Catalog catalog:catalogList
+             ) {
+            System.out.println(catalog.toString());
+        }
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("catalogList", catalogList);
+        mav.setViewName("catalog/addOrDeleteCatalog");
+        return mav;
     }
 
     /**
