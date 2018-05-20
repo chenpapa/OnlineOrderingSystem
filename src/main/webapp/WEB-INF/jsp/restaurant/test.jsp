@@ -1,34 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>websocket测试</title>
-    <script type="text/javascript">
-        var url = 'ws://' + window.location.host + '<%=request.getContextPath()%>/communication';
-        var sock = new WebSocket(url);
-
-        sock.onopen = function () {
-            console.log('开启WebSocket连接！');
-            sayHello();
-        }
-
-        sock.onmessage = function (e) {
-            console.log('接受消息： ', e.data);
-            setTimeout(function () {
-                sayHello()
-            }, 2000);
-        }
-
-        sock.onclose = function () {
-            console.log('关闭WebSocket连接！');
-        }
-
-        function sayHello() {
-            console.log('发送消息： hello world！');
-            sock.send('hello world!');
-        }
-    </script>
+    <title>fileupload</title>
 </head>
 <body>
-hello world!
+<h1>
+    请选择上传的头像文件
+</h1>
+<form method="post" action="<c:url value="/user/upload"/>" enctype="multipart/form-data">
+    <input type="text" name="name"/>
+    <input type="file" name="file"/>
+    <input type="submit"/>
+</form>
 </body>
 </html>
