@@ -137,10 +137,10 @@
 
             function register() {
                 $.post("http://localhost:8080/restaurant/register", {
-                    restaurantPhone: $("#userPhone").val(),
-                    restaurantName: $("#userName").val(),
-                    restaurantPassword: $("#userPassword").val(),
-                    restaurantPic: "未选择餐厅图标.jpg"
+                    restaurantPhone: $("#restaurantPhone").val(),
+                    restaurantName: $("#restaurantName").val(),
+                    restaurantPassword: $("#restaurantPassword").val(),
+                    restaurantLogo: "未选择餐厅图标.jpg"
                 }, function (data) {
                     $("html").html(data);
                 }, "html")

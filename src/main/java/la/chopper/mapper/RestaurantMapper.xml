@@ -36,9 +36,10 @@
         DELETE FROM restaurant
         WHERE restaurant_id = #{restaurantId,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="la.chopper.domain.Restaurant">
+    <insert id="insert" parameterType="la.chopper.domain.Restaurant" useGeneratedKeys="true"
+            keyProperty="restaurant_Id">
         INSERT INTO restaurant (restaurant_id, restaurant_password,
-                                restaurant_name, restaurant_phone, restaurant_address, restaurant_table
+                                restaurant_name, restaurant_phone, restaurant_address, restaurant_logo, restaurant_table
         )
         VALUES (#{restaurantId,jdbcType=BIGINT}, #{restaurantPassword,jdbcType=VARCHAR},
                 #{restaurantName,jdbcType=VARCHAR}, #{restaurantPhone,jdbcType=VARCHAR},

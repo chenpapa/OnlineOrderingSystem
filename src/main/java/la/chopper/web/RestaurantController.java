@@ -51,6 +51,8 @@ public class RestaurantController extends BaseController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(HttpServletRequest request, Restaurant restaurant) {
+        restaurant.setRestaurantAddress("无");
+        restaurant.setRestaurantTable(5);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("success");
         if (restaurantService.register(restaurant)) {
