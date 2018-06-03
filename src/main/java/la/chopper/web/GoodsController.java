@@ -68,18 +68,25 @@ public class GoodsController extends BaseController {
     }
 
     @RequestMapping(value = "/addGoods", method = RequestMethod.POST)
-    public ModelAndView addGoods(HttpServletRequest request, Goods goods, MultipartFile file) {
+    public ModelAndView addGoods(HttpServletRequest request, MultipartFile file) {
+        Goods goods = new Goods();
+        goods.setGoodsCatalogId(Long.parseLong(request.getParameter("catalogId")));
+        goods.setGoodsStatus(Boolean.parseBoolean(request.getParameter("goodsStatus")));
+        goods.setGoodsPrice(Long.parseLong(request.getParameter("goodsPrice")));
+        goods.setGoodsDiscount(Long.parseLong(request.getParameter("goodsDiscount")));
+        goods.setGoodsName(request.getParameter("goodsName"));
+        goods.setGoodsCatalogName(request.getParameter("catalogName"));
+        goods.setGoodsPic("null");
+        goods.setGoodsIsDeleted(true);
         ModelAndView mav = new ModelAndView();
-        goods.setGoodsCatalogId((long) request.getSession().getAttribute("CATALOG_CONTEXT"));
-        goods.setGoodsPic(null);
-        goods.setGoodsStatus(true);
-        mav.setViewName("success");
+        mav.setViewName("goods/success");
         if (!file.isEmpty()) {
             try {
-                String pathName = "d:/images/restaurant/" + request.getSession().getAttribute("restaurantId")
-                        + "/" + "goods/" + RandomPictureName.getUUID();
+                String fileName = RandomPictureName.getUUID();
+                goods.setGoodsPic(fileName);
+                String pathName = "d:/temp/" + fileName;
                 file.transferTo(new File(pathName));
-                goods.setGoodsPic("http://127.0.0.1:8080/" + pathName);
+                goods.setGoodsPic(pathName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -87,7 +94,7 @@ public class GoodsController extends BaseController {
         if (goodsService.insertGoods(goods)) {
             return mav;
         } else {
-            mav.setViewName("fail");
+            mav.setViewName("goods/fail");
         }
         return mav;
     }

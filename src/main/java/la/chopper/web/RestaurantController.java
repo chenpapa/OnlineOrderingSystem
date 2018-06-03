@@ -51,7 +51,7 @@ public class RestaurantController extends BaseController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(HttpServletRequest request, Restaurant restaurant) {
-        restaurant.setRestaurantAddress("无");
+        restaurant.setRestaurantAddress("null");
         restaurant.setRestaurantTable(5);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("success");
@@ -172,6 +172,13 @@ public class RestaurantController extends BaseController {
         }
     }
 
+    /**
+     * 商家登录
+     *
+     * @param request
+     * @param restaurantId
+     * @return
+     */
     @RequestMapping("/{restaurantId}")
     public ModelAndView doLogin(HttpServletRequest request, @PathVariable("restaurantId") long restaurantId) {
         ModelAndView mav = new ModelAndView();

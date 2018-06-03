@@ -16,9 +16,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -135,6 +133,11 @@ public class OrderController extends BaseController {
                 return result;
             }
         }
+    }
+
+    @RequestMapping(value = "/insertOrder", method = RequestMethod.POST)
+    public String insertOrder(@RequestBody List<Detail> details) {
+        return "order/success";
     }
 
     @RequestMapping("selectOrder/{orderId}")

@@ -283,14 +283,18 @@
                 <div class="tile">
                     <h3 class="tile-title">${i}号桌</h3>
                     <div class="tile-body" data-id="${i}">
-                        开桌时间：<br>
-                        用餐状态：<br>
-                        用餐人数：<br>
-                            <%--已&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点：<br>--%>
-                        订单金额：<br>
+                        <div>开桌时间：</div>
+                        <br>
+                        <div>用餐状态：</div>
+                        <br>
+                        <div>用餐顾客：</div>
+                        <br>
+                        <div>订单金额：</div>
+                        <br>
                     </div>
                     <div class="tile-foote">
-                        <a class="btn btn-primary" data-id="${i}" href="<c:url value="/order/selectOrder/${i}"/>">查看</a>
+                        <div class="btn btn-primary" data-id="${i}">查看
+                        </div>
                     </div>
                 </div>
             </div>
@@ -305,6 +309,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/plugins/chart.js"></script>
 <script type="text/javascript">
 
+    var data;
+    var tableNum;
+    var userName;
+    var goodsCount;
+    var goodsId;
+    var goodsName;
+    var goodsPrice;
+    var totalPrice = 0;
+    var temp = "<div class=\"table-responsive\"><table class=\"table\"><thead><tr><th>菜品名称</th><th>菜品数量</th><th>菜品价格</th></tr></thead><tbody>";
+    var map = new Map();
+
     var url = 'ws://' + window.location.host + '<%=request.getContextPath()%>/' + '${restaurantInfo.restaurantId}';
     var sock = new WebSocket(url);
 
@@ -312,16 +327,36 @@
     }
 
     sock.onmessage = function (ev) {
-        var data = $.parseJSON(ev.data);
-        console.log(typeof data);
-        console.log(data.userName);
-        for (var i = 0; i < data.length; i++) {
-            if (i == 0) {
-                var tableNum = data.tableNum;
-                $("div[data-id='" + tableNum + "']").text();
-            }
+        console.log(ev.data);
+        data = $.parseJSON(ev.data);
+        tableNum = data.tableNum;
+        userName = data.userName;
+        var order = data.order;
+        map.set(tableNum, data);
+        for (var i = 0; i < order.length; i++) {
+            totalPrice = totalPrice + parseInt(order[i].goodsPrice.toString());
         }
     }
+
+    $(".btn.btn-primary").click(function () {
+        data = map.get(Number($(this).attr("data-id")));
+        var order = data.order;
+        for (var i = 0; i < order.length; i++) {
+            goodsName = order[i].goodsName;
+            goodsCount = order[i].goodsCount;
+            goodsId = order[i].goodsId;
+            goodsPrice = order[i].goodsPrice;
+            temp = temp + "<tr><td>" + goodsName + "</td><td>" + goodsCount + "</td><td>" + goodsPrice + "</td></tr>";
+        }
+        temp = temp + "<tr><td></td><td></td><td>总价" + totalPrice + "</td></tr><tr><td></td><td></td><td><button class=\"btn btn-primary\" id = \"insertOrder\">结账</button></td></tbody></table></div>";
+        $(".row").html(temp);
+    });
+
+    $("#insertOrder").click(function () {
+        $.post("http://localhost:8080/order/insertOrder",data,function (data) {
+            $(".row").html(data);
+        });
+    });
 </script>
 
 <script type="text/javascript">
@@ -355,10 +390,6 @@
     }
 
     var str = getFormatDate();
-    console.log(str);
-
-    function changeTable() {
-    }
 
     $(function () {
         $(".treeview-item.cataloglist").click(function () {
@@ -380,7 +411,7 @@
 
     $(function () {
         $(".treeview-item.addnewgoods").click(function () {
-            $.get("<c:url value="/goods/addGoods"/>",function (data) {
+            $.get("<c:url value="/goods/addGoods"/>", function (data) {
                 $(".row").html(data);
             });
         });
@@ -388,7 +419,7 @@
 
     $(function () {
         $(".treeview-item.alterGoods").click(function () {
-            $.get("<c:url value="/goods/alterGoods"/>",function (data) {
+            $.get("<c:url value="/goods/alterGoods"/>", function (data) {
                 $(".row").html(data);
             });
         });
