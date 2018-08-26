@@ -22,6 +22,7 @@
 
     <dependencies>
 
+        <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -89,11 +90,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- c3p0 -->
+        <!-- druid -->
         <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>${c3p0.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.10</version>
         </dependency>
 
         <!-- mysql-connector -->
@@ -154,13 +155,6 @@
             <version>1.1.2</version>
         </dependency>
 
-        <!-- jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.3</version>
-        </dependency>
-
         <!-- validation -->
         <dependency>
             <groupId>javax.validation</groupId>
@@ -185,11 +179,6 @@
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
             <version>3.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
         </dependency>
 
         <!-- commons -->
@@ -252,6 +241,10 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
         </plugins>
         <finalName>OnlineOrderingSystem</finalName>

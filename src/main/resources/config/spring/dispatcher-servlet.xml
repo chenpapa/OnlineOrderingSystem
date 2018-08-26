@@ -13,11 +13,19 @@
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/websocket
+       http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
     <context:component-scan base-package="la.chopper.web"/>
 
     <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <!-- 将webSocketHandler映射到"/communication" -->
     <websocket:handlers>
@@ -56,12 +64,12 @@
         <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
         <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
         <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
-        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
     </util:list>
 
     <!--使用Json解析器 -->
     <!-- 默认情况下，MappingJackson2JsonView会将模型中的所有数据全部输出为JSON，通过modelKeys指定模型中的哪些属性需要输出 -->
-    <bean id="goodsListJson" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+    <!--<bean id="goodsListJson" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
 
     <!-- location属性是Resource类型 -->
     <mvc:resources location="/img/" mapping="/img/**"/>

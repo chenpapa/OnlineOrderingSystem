@@ -1,5 +1,8 @@
 package la.chopper.domain;
 
+/**
+ * @author chentao
+ */
 public class DataResult extends BaseDomain{
 
     private String result;

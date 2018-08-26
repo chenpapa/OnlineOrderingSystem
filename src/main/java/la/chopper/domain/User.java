@@ -1,12 +1,15 @@
 package la.chopper.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
+/**
+ * @author chentao
+ */
 public class User extends BaseDomain {
 
     @Pattern(regexp = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\\\d{8}$")
@@ -56,8 +59,7 @@ public class User extends BaseDomain {
         this.userSex = userSex;
     }
 
-    //@JsonFormat注解实现json数据显示正确的date格式
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     public Date getUserBirthday() {
         return userBirthday;
     }

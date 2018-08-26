@@ -1,5 +1,8 @@
 package la.chopper.domain;
 
+/**
+ * @author chentao
+ */
 public class Restaurant extends BaseDomain {
     private Long restaurantId;
 

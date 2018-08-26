@@ -1,5 +1,8 @@
 package la.chopper.domain;
 
+/**
+ * @author chentao
+ */
 public class Catalog extends BaseDomain {
     private Long catalogId;
 

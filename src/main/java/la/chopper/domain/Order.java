@@ -2,6 +2,9 @@ package la.chopper.domain;
 
 import java.util.Date;
 
+/**
+ * @author chentao
+ */
 public class Order extends BaseDomain {
     private Long orderId;
 

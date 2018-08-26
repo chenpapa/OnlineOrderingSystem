@@ -1,5 +1,8 @@
 package la.chopper.domain;
 
+/**
+ * @author chentao
+ */
 public class Detail extends BaseDomain {
     private Long orderId;
 
