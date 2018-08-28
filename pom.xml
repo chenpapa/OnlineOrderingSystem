@@ -13,11 +13,13 @@
         <mybatis.version>3.4.5</mybatis.version>
         <mysql.version>5.1.44</mysql.version>
         <mybatis-spring.version>1.3.1</mybatis-spring.version>
-        <c3p0.version>0.9.5.2</c3p0.version>
+        <druid.version>1.1.10</druid.version>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <servlet.version>4.0.0</servlet.version>
         <xstream.version>1.4.10</xstream.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <pagehelper.version>5.1.4</pagehelper.version>
     </properties>
 
     <dependencies>
@@ -26,7 +28,42 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+        <!-- mybatis分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.version}</version>
+        </dependency>
+
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!-- mysql-connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <!-- mybatis-spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
         </dependency>
 
 
@@ -88,34 +125,6 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.10</version>
-        </dependency>
-
-        <!-- mysql-connector -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
-
-        <!-- mybatis-spring -->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>${mybatis-spring.version}</version>
-        </dependency>
-
-        <!-- mybatis -->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
         </dependency>
 
         <!-- slf4j -->
@@ -244,7 +253,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.2.2</version>
             </plugin>
         </plugins>
         <finalName>OnlineOrderingSystem</finalName>
