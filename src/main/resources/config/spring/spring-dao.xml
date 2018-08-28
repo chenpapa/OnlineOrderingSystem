@@ -38,9 +38,9 @@
 
         <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
         <property name="poolPreparedStatements" value="true"/>
-        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
-        
-        <property name="connectProperties" value="config.decrypt=true;config.decrypt.key=${jdbc.publicKey}"/>
+
+        <property name="filters" value="config"/>
+        <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${jdbc.publicKey}"/>
 
     </bean>
 
