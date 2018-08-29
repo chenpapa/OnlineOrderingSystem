@@ -70,12 +70,7 @@
         <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
         <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
         <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
-        <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
     </util:list>
-
-    <!--使用Json解析器 -->
-    <!-- 默认情况下，MappingJackson2JsonView会将模型中的所有数据全部输出为JSON，通过modelKeys指定模型中的哪些属性需要输出 -->
-    <!--<bean id="goodsListJson" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
 
     <!-- location属性是Resource类型 -->
     <mvc:resources location="/img/" mapping="/img/**"/>
