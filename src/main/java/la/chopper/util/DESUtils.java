@@ -1,4 +1,4 @@
-package la.chopper.utils;
+package la.chopper.util;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -8,9 +8,14 @@ import javax.crypto.KeyGenerator;
 import java.security.Key;
 import java.security.SecureRandom;
 
+/**
+ * @author chentao
+ */
 public class DESUtils {
 
-    //指定DES加密解密所用的密钥
+    /**
+     * 指定DES加密解密所用的密钥
+     */
     private static Key key;
     private static String KEY_STR = "myKey";
 
@@ -25,7 +30,12 @@ public class DESUtils {
         }
     }
 
-    //对字符串进行DES加密，返回BASE64编码的加密字符串
+    /**
+     * 对字符串进行DES加密，返回BASE64编码的加密字符串
+     *
+     * @param string
+     * @return
+     */
     public static String getEncryptString(String string) {
         BASE64Encoder base64Encoder = new BASE64Encoder();
         try {
@@ -39,7 +49,12 @@ public class DESUtils {
         }
     }
 
-    //对BASE64编码的加密字符串进行解密，返回解密后的字符串
+    /**
+     * 对BASE64编码的加密字符串进行解密，返回解密后的字符串
+     *
+     * @param string
+     * @return
+     */
     public static String getDecryptString(String string) {
         BASE64Decoder base64Decoder = new BASE64Decoder();
         try {

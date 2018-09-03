@@ -5,7 +5,7 @@ import la.chopper.domain.Goods;
 import la.chopper.domain.Restaurant;
 import la.chopper.service.CatalogService;
 import la.chopper.service.GoodsService;
-import la.chopper.utils.RandomPictureName;
+import la.chopper.util.RandomPictureName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author chentao
+ */
 @Controller
 @RequestMapping("/goods")
 public class GoodsController extends BaseController {

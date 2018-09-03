@@ -12,6 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+/**
+ * @author chentao
+ */
 @Controller
 @RequestMapping("detail")
 public class DetailController extends BaseController {

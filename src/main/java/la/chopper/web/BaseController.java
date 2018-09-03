@@ -1,11 +1,14 @@
 package la.chopper.web;
 
 import la.chopper.domain.*;
-import la.chopper.utils.CommonConstant;
+import la.chopper.util.CommonConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * @author chentao
+ */
 public class BaseController {
     protected static final String ERROR_MSG_KEY = "errorMsg";
 

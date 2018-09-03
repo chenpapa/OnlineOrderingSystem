@@ -9,7 +9,7 @@ import la.chopper.service.CatalogService;
 import la.chopper.service.GoodsService;
 import la.chopper.service.RestaurantService;
 import la.chopper.service.UserService;
-import la.chopper.utils.CommonConstant;
+import la.chopper.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +25,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author chentao
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {

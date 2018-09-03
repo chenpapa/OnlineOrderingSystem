@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author chentao
+ */
 @Controller
 @RequestMapping("/restaurant")
 public class RestaurantController extends BaseController {

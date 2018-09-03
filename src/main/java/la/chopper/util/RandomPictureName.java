@@ -1,7 +1,10 @@
-package la.chopper.utils;
+package la.chopper.util;
 
 import java.util.UUID;
 
+/**
+ * @author chentao
+ */
 public class RandomPictureName {
 
     public static String getUUID() {

@@ -1,5 +1,9 @@
-package la.chopper.utils;
+package la.chopper.util;
 
+
+/**
+ * @author chentao
+ */
 public class CommonConstant {
     /**
      * 用户对象放到Session中的键名称

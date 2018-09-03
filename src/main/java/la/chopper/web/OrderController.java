@@ -7,7 +7,7 @@ import la.chopper.domain.Order;
 import la.chopper.service.GoodsService;
 import la.chopper.service.OrderService;
 import la.chopper.service.RestaurantService;
-import la.chopper.utils.WebSocketUtils;
+import la.chopper.util.WebSocketUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +18,9 @@ import org.springframework.web.socket.WebSocketSession;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+/**
+ * @author chentao
+ */
 @Controller
 @RequestMapping("/order")
 public class OrderController extends BaseController {

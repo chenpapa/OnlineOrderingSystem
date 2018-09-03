@@ -39,7 +39,7 @@
     </websocket:handlers>
 
     <!-- 声明WebSocketUtils Bean -->
-    <bean id="webSocketHandler" class="la.chopper.utils.WebSocketUtils"/>
+    <bean id="webSocketHandler" class="la.chopper.util.WebSocketUtils"/>
 
     <!-- 注册自定义的类型转换器 -->
     <bean name="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">

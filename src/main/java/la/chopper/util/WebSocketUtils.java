@@ -1,4 +1,4 @@
-package la.chopper.utils;
+package la.chopper.util;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,6 +13,8 @@ import java.util.Map;
  * handleTextMessage():处理文本消息类型
  * handleBinaryMessage():处理二进制消息类型
  * handlePongMessage():处理Pong消息类型
+ *
+ * @author chentao
  */
 public class WebSocketUtils extends AbstractWebSocketHandler {
 
@@ -35,9 +37,9 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String restaurantId = session.getUri().toString().replaceAll("/", "");
-        restaurantWebSocketSession.put(Long.valueOf(restaurantId), session);
-        System.out.println("established");
+            String restaurantId = session.getUri().toString().replaceAll("/", "");
+            restaurantWebSocketSession.put(Long.valueOf(restaurantId), session);
+            System.out.println("established");
     }
 
     @Override
@@ -85,6 +87,4 @@ public class WebSocketUtils extends AbstractWebSocketHandler {
         }
         return true;
     }
-
-
 }

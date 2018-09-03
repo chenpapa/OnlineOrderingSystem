@@ -22,6 +22,12 @@
         <pagehelper.version>5.1.4</pagehelper.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+        </profile>
+    </profiles>
+
     <dependencies>
 
         <!-- fastjson -->
