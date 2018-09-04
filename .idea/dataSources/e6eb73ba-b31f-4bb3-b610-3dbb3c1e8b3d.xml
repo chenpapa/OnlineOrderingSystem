@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="cooms@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.7">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.11">
     <root id="1">
       <DefaultCasing>lower/lower</DefaultCasing>
     </root>
@@ -948,7 +948,7 @@
     <column id="241" parent="233" name="catalog_id">
       <Position>1</Position>
       <Comment>菜系编号</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -956,21 +956,21 @@
     <column id="242" parent="233" name="catalog_restaurant">
       <Position>2</Position>
       <Comment>菜系餐厅（逻辑外键restaurant_id）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="243" parent="233" name="catalog_name">
       <Position>3</Position>
       <Comment>菜系名称（最长10字）</Comment>
-      <DataType>varchar(10)|0</DataType>
+      <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="244" parent="233" name="catalog_is_deleted">
       <Position>4</Position>
       <Comment>删除标志位（1表示删除，0表示为删除）</Comment>
-      <DataType>tinyint(1) unsigned|0</DataType>
+      <DataType>tinyint(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -985,7 +985,7 @@
     <column id="247" parent="234" name="common_id">
       <Position>1</Position>
       <Comment>评论编号</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -993,28 +993,28 @@
     <column id="248" parent="234" name="common_goods">
       <Position>2</Position>
       <Comment>评论菜品（逻辑外键goods_id）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="249" parent="234" name="common_user">
       <Position>3</Position>
       <Comment>评论用户（逻辑外键user_phone）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="250" parent="234" name="common_content">
       <Position>4</Position>
       <Comment>评论内容（最长60字）</Comment>
-      <DataType>varchar(60)|0</DataType>
+      <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="251" parent="234" name="common_date">
       <Position>5</Position>
       <Comment>评论日期</Comment>
-      <DataType>date|0</DataType>
+      <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1032,41 +1032,41 @@
     <column id="255" parent="235" name="order_id">
       <Position>1</Position>
       <Comment>订单编号</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="256" parent="235" name="goods_id">
       <Position>2</Position>
       <Comment>菜品id</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="257" parent="235" name="goods_price">
       <Position>3</Position>
       <Comment>菜品价格（逻辑外键goods_price）</Comment>
-      <DataType>decimal(10) unsigned|0</DataType>
+      <DataType>decimal(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="258" parent="235" name="goods_discount">
       <Position>4</Position>
       <Comment>菜品打折价格（逻辑外键goods_discount）</Comment>
-      <DataType>decimal(10) unsigned|0</DataType>
+      <DataType>decimal(10) unsigned|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="259" parent="235" name="goods_count">
       <Position>5</Position>
       <Comment>菜品数量</Comment>
-      <DataType>tinyint(3) unsigned|0</DataType>
+      <DataType>tinyint(3) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="260" parent="236" name="goods_id">
       <Position>1</Position>
       <Comment>菜品编号</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -1074,48 +1074,48 @@
     <column id="261" parent="236" name="goods_catalog_id">
       <Position>2</Position>
       <Comment>菜品菜系（逻辑外键catalog_id）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="262" parent="236" name="goods_name">
       <Position>3</Position>
       <Comment>菜品名称</Comment>
-      <DataType>varchar(15)|0</DataType>
+      <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="263" parent="236" name="goods_pic">
       <Position>4</Position>
       <Comment>菜品图片(绝对路径)</Comment>
-      <DataType>varchar(300)|0</DataType>
+      <DataType>varchar(300)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="264" parent="236" name="goods_price">
       <Position>5</Position>
       <Comment>菜品正常价格</Comment>
-      <DataType>decimal(10) unsigned|0</DataType>
+      <DataType>decimal(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="265" parent="236" name="goods_discount">
       <Position>6</Position>
       <Comment>菜品打折价格</Comment>
-      <DataType>decimal(10)|0</DataType>
+      <DataType>decimal(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="266" parent="236" name="goods_status">
       <Position>7</Position>
       <Comment>菜品状态（售完/在售）</Comment>
-      <DataType>tinyint(1) unsigned|0</DataType>
+      <DataType>tinyint(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="267" parent="236" name="goods_is_deleted">
       <Position>8</Position>
       <Comment>删除标志位（1表示删除，0表示未删除）</Comment>
-      <DataType>tinyint(1) unsigned|0</DataType>
+      <DataType>tinyint(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1133,7 +1133,7 @@
     <column id="271" parent="237" name="order_id">
       <Position>1</Position>
       <Comment>订单编号</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -1141,49 +1141,49 @@
     <column id="272" parent="237" name="order_restaurant">
       <Position>2</Position>
       <Comment>订单餐厅（逻辑外键restaurant_id）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="273" parent="237" name="order_user">
       <Position>3</Position>
       <Comment>订单用户（逻辑外键user_phone）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="274" parent="237" name="order_table">
       <Position>4</Position>
       <Comment>订单桌号</Comment>
-      <DataType>int(1) unsigned|0</DataType>
+      <DataType>int(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="275" parent="237" name="order_staff">
       <Position>5</Position>
       <Comment>订单操作员工（逻辑外键sraff_id）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="276" parent="237" name="order_date">
       <Position>6</Position>
       <Comment>订单日期</Comment>
-      <DataType>date|0</DataType>
+      <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="277" parent="237" name="order_status">
       <Position>7</Position>
       <Comment>订单状态（1为已付，0为未付）</Comment>
-      <DataType>tinyint(1) unsigned|0</DataType>
+      <DataType>tinyint(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="278" parent="237" name="order_total">
       <Position>8</Position>
       <Comment>订单金额</Comment>
-      <DataType>decimal(10) unsigned|0</DataType>
+      <DataType>decimal(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1201,7 +1201,7 @@
     <column id="282" parent="238" name="restaurant_id">
       <Position>1</Position>
       <Comment>餐厅编号</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -1209,42 +1209,42 @@
     <column id="283" parent="238" name="restaurant_password">
       <Position>2</Position>
       <Comment>餐厅密码</Comment>
-      <DataType>varchar(16)|0</DataType>
+      <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="284" parent="238" name="restaurant_name">
       <Position>3</Position>
       <Comment>餐厅名称（最长10位）</Comment>
-      <DataType>varchar(10)|0</DataType>
+      <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="285" parent="238" name="restaurant_phone">
       <Position>4</Position>
       <Comment>餐厅电话</Comment>
-      <DataType>varchar(11)|0</DataType>
+      <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="286" parent="238" name="restaurant_address">
       <Position>5</Position>
       <Comment>餐厅地址（最长30位）</Comment>
-      <DataType>varchar(30)|0</DataType>
+      <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="287" parent="238" name="restaurant_logo">
       <Position>6</Position>
       <Comment>餐厅logo（图片名）</Comment>
-      <DataType>varchar(300)|0</DataType>
+      <DataType>varchar(300)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="288" parent="238" name="restaurant_table">
       <Position>7</Position>
       <Comment>餐厅座位数量</Comment>
-      <DataType>int(2)|0</DataType>
+      <DataType>int(2)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="289" parent="238" name="PRIMARY">
@@ -1255,7 +1255,7 @@
     <column id="290" parent="239" name="staff_id">
       <Position>1</Position>
       <Comment>员工id</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
@@ -1263,28 +1263,28 @@
     <column id="291" parent="239" name="staff_name">
       <Position>2</Position>
       <Comment>员工姓名</Comment>
-      <DataType>varchar(10)|0</DataType>
+      <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="292" parent="239" name="staff_password">
       <Position>3</Position>
       <Comment>员工密码</Comment>
-      <DataType>varchar(16)|0</DataType>
+      <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="293" parent="239" name="staff_restaurant">
       <Position>4</Position>
       <Comment>员工所属餐厅（逻辑外键）</Comment>
-      <DataType>bigint(20) unsigned|0</DataType>
+      <DataType>bigint(20) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="294" parent="239" name="staff_authority">
       <Position>5</Position>
       <Comment>员工权限（1为管理员权限，0为普通权限）</Comment>
-      <DataType>tinyint(1) unsigned|0</DataType>
+      <DataType>tinyint(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1296,35 +1296,35 @@
     <column id="296" parent="240" name="user_phone">
       <Position>1</Position>
       <Comment>手机号码（11位）</Comment>
-      <DataType>varchar(11)|0</DataType>
+      <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="297" parent="240" name="user_name">
       <Position>2</Position>
       <Comment>用户姓名</Comment>
-      <DataType>varchar(10)|0</DataType>
+      <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="298" parent="240" name="user_password">
       <Position>3</Position>
       <Comment>用户密码（最长16位）</Comment>
-      <DataType>varchar(16)|0</DataType>
+      <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="299" parent="240" name="user_sex">
       <Position>4</Position>
       <Comment>用户性别（0为女，1为男）</Comment>
-      <DataType>tinyint(1) unsigned|0</DataType>
+      <DataType>tinyint(1) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="300" parent="240" name="user_birthday">
       <Position>5</Position>
       <Comment>用户生日</Comment>
-      <DataType>date|0</DataType>
+      <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>

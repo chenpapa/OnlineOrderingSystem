@@ -6,6 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author chentao
+ */
 public class DateConverter implements Converter<String, Date> {
     @Override
     public Date convert(String source) {
